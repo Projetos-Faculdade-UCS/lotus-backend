@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 app/manage.py runserver 0.0.0.0:8000
+docker run -it --rm -p 8000:8000 -v ./app:/app lotus-backend:0.0.1
