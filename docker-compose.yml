@@ -7,7 +7,7 @@ services:
       - ./app:/app
     env_file:
       - .env
-    command: ["./run.sh"]
+    command: ["./entrypoint.sh"]
     depends_on:
       - db
   db:
