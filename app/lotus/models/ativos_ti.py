@@ -48,3 +48,17 @@ class Computador(AtivoTI):
     def __str__(self) -> str:
         """Retorna o nome do computador."""
         return f"{self.nome} - {self.patrimonio}"
+
+
+class Impressora(AtivoTI):
+    """Modelo de impressora."""
+
+    class Meta:
+        """Meta informações do modelo."""
+
+        verbose_name = "Impressora"
+        verbose_name_plural = "Impressoras"
+
+    def __str__(self) -> str:
+        """Retorna o nome da impressora."""
+        return f"{self.nome} - {self.patrimonio}"

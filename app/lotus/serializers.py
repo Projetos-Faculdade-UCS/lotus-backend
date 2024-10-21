@@ -4,7 +4,7 @@ from typing import ClassVar
 
 from rest_framework import serializers
 
-from lotus.models import Bloco, Computador, Sala
+from lotus.models import AtivoTI, Bloco, Computador, Impressora, Sala
 
 
 class BlocoSerializer(serializers.ModelSerializer):
@@ -29,8 +29,8 @@ class SalaSerializer(serializers.ModelSerializer):
         fields: ClassVar[list[str]] = ["id", "nome", "bloco"]
 
 
-class ComputadorListSerializer(serializers.ModelSerializer):
-    """Serializer de listagem de computadores."""
+class AtivoTIBaseSerializer(serializers.ModelSerializer):
+    """Base serializer para ativos de TI."""
 
     sala = SalaSerializer(source="local")
     relacionamentos = serializers.SerializerMethodField()
@@ -38,7 +38,7 @@ class ComputadorListSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta informações do serializer."""
 
-        model = Computador
+        model = None
         fields: ClassVar[list[str]] = [
             "nome",
             "fabricante",
@@ -51,6 +51,24 @@ class ComputadorListSerializer(serializers.ModelSerializer):
             "relacionamentos",
         ]
 
-    def get_relacionamentos(self, obj: Computador) -> int:
+    def get_relacionamentos(self, obj: AtivoTI) -> int:
         """Retorna a quantidade de relacionamentos."""
         return obj.ativos_relacionados.count()
+
+
+class ComputadorListSerializer(AtivoTIBaseSerializer):
+    """Serializer de listagem de computadores."""
+
+    class Meta(AtivoTIBaseSerializer.Meta):
+        """Meta informações do serializer."""
+
+        model = Computador
+
+
+class ImpressoraListSerializer(AtivoTIBaseSerializer):
+    """Serializer de listagem de impressoras."""
+
+    class Meta(AtivoTIBaseSerializer.Meta):
+        """Meta informações do serializer."""
+
+        model = Impressora
