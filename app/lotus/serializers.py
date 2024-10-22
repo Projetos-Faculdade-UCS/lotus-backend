@@ -4,7 +4,7 @@ from typing import ClassVar
 
 from rest_framework import serializers
 
-from lotus.models import AtivoTI, Bloco, Computador, Impressora, Sala
+from lotus.models import AtivoTI, Bloco, Computador, Impressora, Monitor, Sala
 
 
 class BlocoSerializer(serializers.ModelSerializer):
@@ -72,3 +72,12 @@ class ImpressoraListSerializer(AtivoTIBaseSerializer):
         """Meta informações do serializer."""
 
         model = Impressora
+
+
+class MonitorListSerializer(AtivoTIBaseSerializer):
+    """Serializer de listagem de monitores."""
+
+    class Meta(AtivoTIBaseSerializer.Meta):
+        """Meta informações do serializer."""
+
+        model = Monitor

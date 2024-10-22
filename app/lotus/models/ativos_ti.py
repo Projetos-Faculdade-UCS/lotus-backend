@@ -62,3 +62,19 @@ class Impressora(AtivoTI):
     def __str__(self) -> str:
         """Retorna o nome da impressora."""
         return f"{self.nome} - {self.patrimonio}"
+
+
+class Monitor(AtivoTI):
+    """Modelo de monitor."""
+
+    resolucao = models.CharField(max_length=100)
+
+    class Meta:
+        """Meta informações do modelo."""
+
+        verbose_name = "Monitor"
+        verbose_name_plural = "Monitores"
+
+    def __str__(self) -> str:
+        """Retorna o nome do monitor."""
+        return f"{self.nome} - {self.patrimonio}"
