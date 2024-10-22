@@ -40,6 +40,7 @@ class AtivoTIBaseSerializer(serializers.ModelSerializer):
 
         model = None
         fields: ClassVar[list[str]] = [
+            "id",
             "nome",
             "fabricante",
             "numero_serie",
@@ -49,6 +50,8 @@ class AtivoTIBaseSerializer(serializers.ModelSerializer):
             "patrimonio",
             "sala",
             "relacionamentos",
+            "responsavel",
+            "ultima_atualizacao",
         ]
 
     def get_relacionamentos(self, obj: AtivoTI) -> int:

@@ -8,7 +8,7 @@ from lotus.models.locais import Sala
 class AtivoTI(models.Model):
     """Modelo genérico de ativo de TI."""
 
-    patrimonio = models.CharField(max_length=50, primary_key=True)
+    patrimonio = models.CharField(max_length=50, unique=True)
     nome = models.CharField(max_length=100)
     fabricante = models.CharField(max_length=100)
     numero_serie = models.CharField(max_length=50)
@@ -17,6 +17,8 @@ class AtivoTI(models.Model):
     automatico = models.BooleanField(default=False)
     local = models.ForeignKey(Sala, on_delete=models.SET_NULL, null=True)
     ativos_relacionados = models.ManyToManyField("self", blank=True)
+    responsavel = models.CharField(max_length=100)
+    ultima_atualizacao = models.DateTimeField(auto_now=True)
 
     class Meta:
         """Meta informações do modelo."""
@@ -36,8 +38,8 @@ class Computador(AtivoTI):
     modelo_cpu = models.CharField(max_length=100)
     ultimo_usuario_logado = models.CharField(max_length=100)
     valido = models.BooleanField(default=False)
-    ultima_atualizacao = models.DateTimeField(auto_now=True)
     sistema_operacional = models.CharField(max_length=100)
+    placa_mae = models.CharField(max_length=100)
 
     class Meta:
         """Meta informações do modelo."""
