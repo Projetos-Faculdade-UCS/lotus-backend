@@ -68,6 +68,23 @@ class ComputadorListSerializer(AtivoTIBaseSerializer):
         model = Computador
 
 
+class ComputadorDetailSerializer(AtivoTIBaseSerializer):
+    """Serializer de detalhes de computadores."""
+
+    class Meta(AtivoTIBaseSerializer.Meta):
+        """Meta informações do serializer."""
+
+        model = Computador
+        fields: ClassVar[list[str]] = [
+            *AtivoTIBaseSerializer.Meta.fields,
+            "tamanho_ram",
+            "modelo_cpu",
+            "placa_mae",
+            "tamanho_hd",
+            "sistema_operacional",
+        ]
+
+
 class ImpressoraListSerializer(AtivoTIBaseSerializer):
     """Serializer de listagem de impressoras."""
 
