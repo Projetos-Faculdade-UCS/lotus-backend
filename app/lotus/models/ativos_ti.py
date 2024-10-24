@@ -4,6 +4,12 @@ from lotus.models.locais import Sala
 
 # Create your models here.
 
+CHOICES_CRITICIDADE_DADOS = (
+    ("ALTA", "Alta Prioridade"),
+    ("MEDIA", "Média Prioridade"),
+    ("BAIXA", "Baixa Prioridade"),
+)
+
 
 class AtivoTI(models.Model):
     """Modelo genérico de ativo de TI."""
@@ -40,6 +46,11 @@ class Computador(AtivoTI):
     valido = models.BooleanField(default=False)
     sistema_operacional = models.CharField(max_length=100)
     placa_mae = models.CharField(max_length=100)
+    criticidade_dados = models.CharField(
+        max_length=50,
+        choices=CHOICES_CRITICIDADE_DADOS,
+        default="BAIXA",
+    )
 
     class Meta:
         """Meta informações do modelo."""

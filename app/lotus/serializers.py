@@ -101,6 +101,7 @@ class ComputadorDetailSerializer(AtivoTIBaseSerializer):
     """Serializer de detalhes de computadores."""
 
     hd = serializers.CharField(source="tamanho_hd")
+    criticidade = serializers.CharField(source="criticidade_dados")
     programas = ProgramaSerializer(many=True, read_only=True, source="programa_set")
     licencas = LicencaSoftwareSerializer(
         many=True,
@@ -119,6 +120,7 @@ class ComputadorDetailSerializer(AtivoTIBaseSerializer):
             "placa_mae",
             "hd",
             "sistema_operacional",
+            "criticidade",
             "programas",
             "licencas",
         ]
