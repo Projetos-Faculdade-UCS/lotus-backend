@@ -4,7 +4,16 @@ from typing import ClassVar
 
 from rest_framework import serializers
 
-from lotus.models import AtivoTI, Bloco, Computador, Impressora, Monitor, Sala
+from lotus.models import (
+    AtivoTI,
+    Bloco,
+    Computador,
+    Impressora,
+    LicencaSoftware,
+    Monitor,
+    Programa,
+    Sala,
+)
 
 
 class BlocoSerializer(serializers.ModelSerializer):
@@ -27,6 +36,26 @@ class SalaSerializer(serializers.ModelSerializer):
 
         model = Sala
         fields: ClassVar[list[str]] = ["id", "nome", "bloco"]
+
+
+class ProgramaSerializer(serializers.ModelSerializer):
+    """Serializer de programas."""
+
+    class Meta:
+        """Meta informações do serializer."""
+
+        model = Programa
+        exclude: ClassVar[list[str]] = ["computador"]
+
+
+class LicencaSoftwareSerializer(serializers.ModelSerializer):
+    """Serializer de licenças de software."""
+
+    class Meta:
+        """Meta informações do serializer."""
+
+        model = LicencaSoftware
+        exclude: ClassVar[list[str]] = ["computador"]
 
 
 class AtivoTIBaseSerializer(serializers.ModelSerializer):
@@ -71,6 +100,14 @@ class ComputadorListSerializer(AtivoTIBaseSerializer):
 class ComputadorDetailSerializer(AtivoTIBaseSerializer):
     """Serializer de detalhes de computadores."""
 
+    hd = serializers.CharField(source="tamanho_hd")
+    programas = ProgramaSerializer(many=True, read_only=True, source="programa_set")
+    licencas = LicencaSoftwareSerializer(
+        many=True,
+        read_only=True,
+        source="licencasoftware_set",
+    )
+
     class Meta(AtivoTIBaseSerializer.Meta):
         """Meta informações do serializer."""
 
@@ -80,8 +117,10 @@ class ComputadorDetailSerializer(AtivoTIBaseSerializer):
             "tamanho_ram",
             "modelo_cpu",
             "placa_mae",
-            "tamanho_hd",
+            "hd",
             "sistema_operacional",
+            "programas",
+            "licencas",
         ]
 
 
