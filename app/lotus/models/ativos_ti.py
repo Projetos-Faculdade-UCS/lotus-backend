@@ -3,6 +3,11 @@ from django.db import models
 from lotus.models.locais import Sala
 
 # Create your models here.
+CHOICES_TIPO_ATIVO = (
+    ("COMPUTADOR", "Computador"),
+    ("IMPRESSORA", "Impressora"),
+    ("MONITOR", "Monitor"),
+)
 
 CHOICES_CRITICIDADE_DADOS = (
     ("ALTA", "Alta Prioridade"),
@@ -14,6 +19,7 @@ CHOICES_CRITICIDADE_DADOS = (
 class AtivoTI(models.Model):
     """Modelo genérico de ativo de TI."""
 
+    tipo = models.CharField(max_length=50, choices=CHOICES_TIPO_ATIVO)
     patrimonio = models.CharField(max_length=50, unique=True)
     nome = models.CharField(max_length=100)
     fabricante = models.CharField(max_length=100)

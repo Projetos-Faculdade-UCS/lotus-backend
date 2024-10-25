@@ -70,6 +70,7 @@ class AtivoTIBaseSerializer(serializers.ModelSerializer):
         model = None
         fields: ClassVar[list[str]] = [
             "id",
+            "tipo",
             "nome",
             "fabricante",
             "numero_serie",
