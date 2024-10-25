@@ -123,6 +123,8 @@ class ComputadorDetailSerializer(AtivoTIBaseSerializer):
             "criticidade",
             "programas",
             "licencas",
+            "valido",
+            "ultimo_usuario_logado",
         ]
 
 
