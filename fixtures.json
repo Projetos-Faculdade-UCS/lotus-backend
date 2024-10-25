@@ -1,0 +1,74 @@
+[
+    {
+        "model": "lotus.sala",
+        "pk": 1,
+        "fields": {
+            "nome": "306",
+            "bloco": 1
+        }
+    },
+    {
+        "model": "lotus.bloco",
+        "pk": 1,
+        "fields": {
+            "nome": "71",
+            "cidade": "Caxias do sul",
+            "campus": "Sede"
+        }
+    },
+    {
+        "model": "lotus.computador",
+        "pk": 1,
+        "fields": {
+            "patrimonio": "881754",
+            "nome": "Acer Aspire 7",
+            "fabricante": "Acer",
+            "numero_serie": "123",
+            "em_uso": true,
+            "descricao": "Phasellus in felis. Donec semper sapien a libero. Nam dui.",
+            "automatico": true,
+            "local": 1,
+            "responsavel": "sfrederico",
+            "ultima_atualizacao": "2024-10-24T22:24:26.280Z",
+            "tamanho_ram": "8Gb + 8Gb",
+            "tamanho_hd": "256 GB (KINGSTON SA400S37256G);256 GB (KINGSTON SA400S37256G)",
+            "modelo_cpu": "Intel i5 12400",
+            "ultimo_usuario_logado": "sfrederico",
+            "valido": true,
+            "sistema_operacional": "Windows 11",
+            "placa_mae": "TUF GAMING B550M-PLUS",
+            "criticidade_dados": "BAIXA",
+            "ativos_relacionados": []
+        }
+    },
+    {
+        "model": "lotus.licencasoftware",
+        "pk": 1,
+        "fields": {
+            "nome": "Microsoft Office 2019",
+            "quantidade": 100,
+            "quantidade_em_uso": 10,
+            "data_expiracao": "2024-10-31",
+            "descricao": "Licença do Microsoft Office 2019",
+            "computador": 1
+        }
+    },
+    {
+        "model": "lotus.programa",
+        "pk": 1,
+        "fields": {
+            "nome": "Microsoft Visual C++ 2022 X64 Minimum Runtime - 14.40.33810",
+            "versao": "14.40.33810",
+            "computador": 1
+        }
+    },
+    {
+        "model": "lotus.programa",
+        "pk": 2,
+        "fields": {
+            "nome": "DaVinci Resolve",
+            "versao": "19.0.10006",
+            "computador": 1
+        }
+    }
+]
