@@ -91,15 +91,22 @@ class AtivoTIBaseSerializer(serializers.ModelSerializer):
 class ComputadorListSerializer(AtivoTIBaseSerializer):
     """Serializer de listagem de computadores."""
 
+    tipo = serializers.CharField(default="Computador")
+
     class Meta(AtivoTIBaseSerializer.Meta):
         """Meta informações do serializer."""
 
         model = Computador
+        fields: ClassVar[list[str]] = [
+            *AtivoTIBaseSerializer.Meta.fields,
+            "tipo",
+        ]
 
 
 class ComputadorDetailSerializer(AtivoTIBaseSerializer):
     """Serializer de detalhes de computadores."""
 
+    tipo = serializers.CharField(default="Computador")
     hd = serializers.CharField(source="tamanho_hd")
     criticidade = serializers.CharField(source="criticidade_dados")
     programas = ProgramaSerializer(many=True, read_only=True, source="programa_set")
@@ -115,6 +122,7 @@ class ComputadorDetailSerializer(AtivoTIBaseSerializer):
         model = Computador
         fields: ClassVar[list[str]] = [
             *AtivoTIBaseSerializer.Meta.fields,
+            "tipo",
             "tamanho_ram",
             "modelo_cpu",
             "placa_mae",
