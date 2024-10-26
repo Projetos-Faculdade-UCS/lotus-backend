@@ -4,15 +4,15 @@ from lotus.models.locais import Sala
 
 # Create your models here.
 CHOICES_TIPO_ATIVO = (
-    ("COMPUTADOR", "Computador"),
-    ("IMPRESSORA", "Impressora"),
-    ("MONITOR", "Monitor"),
+    ("computador", "Computador"),
+    ("impressora", "Impressora"),
+    ("monitor", "Monitor"),
 )
 
 CHOICES_CRITICIDADE_DADOS = (
-    ("ALTA", "Alta Prioridade"),
-    ("MEDIA", "Média Prioridade"),
-    ("BAIXA", "Baixa Prioridade"),
+    ("alta", "Alta Prioridade"),
+    ("media", "Média Prioridade"),
+    ("baixa", "Baixa Prioridade"),
 )
 
 
@@ -20,7 +20,7 @@ class AtivoTI(models.Model):
     """Modelo genérico de ativo de TI."""
 
     tipo = models.CharField(max_length=50, choices=CHOICES_TIPO_ATIVO)
-    patrimonio = models.CharField(max_length=50, unique=True)
+    patrimonio = models.IntegerField(unique=True)
     nome = models.CharField(max_length=100)
     fabricante = models.CharField(max_length=100)
     numero_serie = models.CharField(max_length=50)
@@ -55,7 +55,7 @@ class Computador(AtivoTI):
     criticidade_dados = models.CharField(
         max_length=50,
         choices=CHOICES_CRITICIDADE_DADOS,
-        default="BAIXA",
+        default="baixa",
     )
 
     class Meta:
