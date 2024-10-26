@@ -3,12 +3,24 @@ from django.db import models
 from lotus.models.locais import Sala
 
 # Create your models here.
+CHOICES_TIPO_ATIVO = (
+    ("computador", "Computador"),
+    ("impressora", "Impressora"),
+    ("monitor", "Monitor"),
+)
+
+CHOICES_CRITICIDADE_DADOS = (
+    ("alta", "Alta Prioridade"),
+    ("media", "Média Prioridade"),
+    ("baixa", "Baixa Prioridade"),
+)
 
 
 class AtivoTI(models.Model):
     """Modelo genérico de ativo de TI."""
 
-    patrimonio = models.CharField(max_length=50, unique=True)
+    tipo = models.CharField(max_length=50, choices=CHOICES_TIPO_ATIVO)
+    patrimonio = models.IntegerField(unique=True)
     nome = models.CharField(max_length=100)
     fabricante = models.CharField(max_length=100)
     numero_serie = models.CharField(max_length=50)
@@ -40,6 +52,11 @@ class Computador(AtivoTI):
     valido = models.BooleanField(default=False)
     sistema_operacional = models.CharField(max_length=100)
     placa_mae = models.CharField(max_length=100)
+    criticidade_dados = models.CharField(
+        max_length=50,
+        choices=CHOICES_CRITICIDADE_DADOS,
+        default="baixa",
+    )
 
     class Meta:
         """Meta informações do modelo."""

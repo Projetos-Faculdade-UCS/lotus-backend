@@ -4,7 +4,16 @@ from typing import ClassVar
 
 from rest_framework import serializers
 
-from lotus.models import AtivoTI, Bloco, Computador, Impressora, Monitor, Sala
+from lotus.models import (
+    AtivoTI,
+    Bloco,
+    Computador,
+    Impressora,
+    LicencaSoftware,
+    Monitor,
+    Programa,
+    Sala,
+)
 
 
 class BlocoSerializer(serializers.ModelSerializer):
@@ -29,6 +38,26 @@ class SalaSerializer(serializers.ModelSerializer):
         fields: ClassVar[list[str]] = ["id", "nome", "bloco"]
 
 
+class ProgramaSerializer(serializers.ModelSerializer):
+    """Serializer de programas."""
+
+    class Meta:
+        """Meta informações do serializer."""
+
+        model = Programa
+        exclude: ClassVar[list[str]] = ["computador"]
+
+
+class LicencaSoftwareSerializer(serializers.ModelSerializer):
+    """Serializer de licenças de software."""
+
+    class Meta:
+        """Meta informações do serializer."""
+
+        model = LicencaSoftware
+        exclude: ClassVar[list[str]] = ["computador"]
+
+
 class AtivoTIBaseSerializer(serializers.ModelSerializer):
     """Base serializer para ativos de TI."""
 
@@ -41,6 +70,7 @@ class AtivoTIBaseSerializer(serializers.ModelSerializer):
         model = None
         fields: ClassVar[list[str]] = [
             "id",
+            "tipo",
             "nome",
             "fabricante",
             "numero_serie",
@@ -66,6 +96,37 @@ class ComputadorListSerializer(AtivoTIBaseSerializer):
         """Meta informações do serializer."""
 
         model = Computador
+
+
+class ComputadorDetailSerializer(AtivoTIBaseSerializer):
+    """Serializer de detalhes de computadores."""
+
+    hd = serializers.CharField(source="tamanho_hd")
+    criticidade = serializers.CharField(source="criticidade_dados")
+    programas = ProgramaSerializer(many=True, read_only=True, source="programa_set")
+    licencas = LicencaSoftwareSerializer(
+        many=True,
+        read_only=True,
+        source="licencasoftware_set",
+    )
+
+    class Meta(AtivoTIBaseSerializer.Meta):
+        """Meta informações do serializer."""
+
+        model = Computador
+        fields: ClassVar[list[str]] = [
+            *AtivoTIBaseSerializer.Meta.fields,
+            "tamanho_ram",
+            "modelo_cpu",
+            "placa_mae",
+            "hd",
+            "sistema_operacional",
+            "criticidade",
+            "programas",
+            "licencas",
+            "valido",
+            "ultimo_usuario_logado",
+        ]
 
 
 class ImpressoraListSerializer(AtivoTIBaseSerializer):

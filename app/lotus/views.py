@@ -1,8 +1,9 @@
-from django.shortcuts import render
 from rest_framework import viewsets
 
 from lotus.models import Computador, Impressora, Monitor
 from lotus.serializers import (
+    AtivoTIBaseSerializer,
+    ComputadorDetailSerializer,
     ComputadorListSerializer,
     ImpressoraListSerializer,
     MonitorListSerializer,
@@ -15,7 +16,12 @@ class ComputadoresViewSet(viewsets.ModelViewSet):
     """ViewSet de computadores."""
 
     queryset = Computador.objects.all()
-    serializer_class = ComputadorListSerializer
+
+    def get_serializer_class(self) -> AtivoTIBaseSerializer:
+        """Retorna a classe de serializer."""
+        if self.action == "list":
+            return ComputadorListSerializer
+        return ComputadorDetailSerializer
 
 
 class ImpressorasViewSet(viewsets.ModelViewSet):
