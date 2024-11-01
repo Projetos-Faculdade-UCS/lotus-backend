@@ -1,0 +1,130 @@
+[
+{
+    "model": "lotus.sala",
+    "pk": 1,
+    "fields": {
+        "nome": "205",
+        "bloco": 1
+    }
+},
+{
+    "model": "lotus.sala",
+    "pk": 2,
+    "fields": {
+        "nome": "306",
+        "bloco": 1
+    }
+},
+{
+    "model": "lotus.sala",
+    "pk": 3,
+    "fields": {
+        "nome": "100",
+        "bloco": 1
+    }
+},
+{
+    "model": "lotus.sala",
+    "pk": 4,
+    "fields": {
+        "nome": "404",
+        "bloco": 2
+    }
+},
+{
+    "model": "lotus.sala",
+    "pk": 5,
+    "fields": {
+        "nome": "301",
+        "bloco": 2
+    }
+},
+{
+    "model": "lotus.sala",
+    "pk": 6,
+    "fields": {
+        "nome": "401",
+        "bloco": 3
+    }
+},
+{
+    "model": "lotus.bloco",
+    "pk": 1,
+    "fields": {
+        "nome": "71",
+        "cidade": "Caxias do Sul",
+        "campus": "Sede"
+    }
+},
+{
+    "model": "lotus.bloco",
+    "pk": 2,
+    "fields": {
+        "nome": "58",
+        "cidade": "Caxias do Sul",
+        "campus": "Sede"
+    }
+},
+{
+    "model": "lotus.bloco",
+    "pk": 3,
+    "fields": {
+        "nome": "70",
+        "cidade": "Caxias do Sul",
+        "campus": "Sede"
+    }
+},
+{
+    "model": "lotus.computador",
+    "pk": 1,
+    "fields": {
+        "tipo": "computador",
+        "patrimonio": 405896,
+        "nome": "Razer Blade 15",
+        "fabricante": "Razer",
+        "numero_serie": "7706d4da513502ca6f5256e798374e0d70cc0aae9fef1b26a3",
+        "em_uso": true,
+        "descricao": "Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.",
+        "automatico": true,
+        "local": 1,
+        "responsavel": "sfrederico",
+        "ultima_atualizacao": "2024-11-01T22:36:19.138Z",
+        "tamanho_ram": "8GB + 8GB",
+        "tamanho_hd": "256 GB (KINGSTON SA400S37256G)",
+        "modelo_cpu": "Intel i5 12400",
+        "ultimo_usuario_logado": "sfrederico",
+        "valido": true,
+        "sistema_operacional": "Windows 11",
+        "placa_mae": "TUF GAMING B550M-PLUS",
+        "criticidade_dados": "baixa",
+        "ativos_relacionados": []
+    }
+},
+{
+    "model": "lotus.programa",
+    "pk": 1,
+    "fields": {
+        "nome": "Riot Vanguard",
+        "versao": "N/A",
+        "computador": 1
+    }
+},
+{
+    "model": "lotus.programa",
+    "pk": 2,
+    "fields": {
+        "nome": "Microsoft Visual C++ 2013 x64 Minimum Runtime - 12.0.40664",
+        "versao": "12.0.40664",
+        "computador": 1
+    }
+},
+{
+    "model": "lotus.programa",
+    "pk": 3,
+    "fields": {
+        "nome": "NVIDIA NVAPI Monitor plugin for NvContainer",
+        "versao": "1.0",
+        "computador": 1
+    }
+}
+]
