@@ -19,17 +19,21 @@ CHOICES_CRITICIDADE_DADOS = (
 class AtivoTI(models.Model):
     """Modelo genérico de ativo de TI."""
 
-    tipo = models.CharField(max_length=50, choices=CHOICES_TIPO_ATIVO)
+    tipo = models.CharField(
+        max_length=50,
+        choices=CHOICES_TIPO_ATIVO,
+        default="computador",
+    )
     patrimonio = models.IntegerField(unique=True)
     nome = models.CharField(max_length=100)
-    fabricante = models.CharField(max_length=100)
-    numero_serie = models.CharField(max_length=50)
+    fabricante = models.CharField(max_length=100, blank=True)
+    numero_serie = models.CharField(max_length=50, blank=True)
     em_uso = models.BooleanField(default=False)
-    descricao = models.TextField()
-    automatico = models.BooleanField(default=False)
-    local = models.ForeignKey(Sala, on_delete=models.SET_NULL, null=True)
+    descricao = models.TextField(blank=True)
+    automatico = models.BooleanField(default=True)
+    local = models.ForeignKey(Sala, on_delete=models.SET_NULL, blank=True, null=True)
     ativos_relacionados = models.ManyToManyField("self", blank=True)
-    responsavel = models.CharField(max_length=100)
+    responsavel = models.CharField(max_length=100, blank=True)
     ultima_atualizacao = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -45,13 +49,13 @@ class AtivoTI(models.Model):
 class Computador(AtivoTI):
     """Modelo de computador."""
 
-    tamanho_ram = models.CharField(max_length=100)
-    tamanho_hd = models.CharField(max_length=100)
-    modelo_cpu = models.CharField(max_length=100)
-    ultimo_usuario_logado = models.CharField(max_length=100)
+    tamanho_ram = models.CharField(max_length=100, blank=True)
+    tamanho_hd = models.CharField(max_length=100, blank=True)
+    modelo_cpu = models.CharField(max_length=100, blank=True)
+    ultimo_usuario_logado = models.CharField(max_length=100, blank=True)
     valido = models.BooleanField(default=False)
-    sistema_operacional = models.CharField(max_length=100)
-    placa_mae = models.CharField(max_length=100)
+    sistema_operacional = models.CharField(max_length=100, blank=True)
+    placa_mae = models.CharField(max_length=100, blank=True)
     criticidade_dados = models.CharField(
         max_length=50,
         choices=CHOICES_CRITICIDADE_DADOS,
