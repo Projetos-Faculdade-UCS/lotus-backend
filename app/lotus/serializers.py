@@ -145,3 +145,43 @@ class MonitorListSerializer(AtivoTIBaseSerializer):
         """Meta informações do serializer."""
 
         model = Monitor
+
+
+class AgenteBaseSerializer(serializers.ModelSerializer):
+    """Base serializer para informações vindas do agente."""
+
+    class Meta:
+        """Meta informações do serializer."""
+
+        model = None
+        fields: ClassVar[list[str]] = []
+
+    def create(self, validated_data: dict) -> None:
+        """Cria um objeto com as informações do agente."""
+        patrimono = validated_data.pop("patrimonio")
+        obj, _ = Computador.objects.update_or_create(
+            patrimonio=patrimono,
+            defaults=validated_data,
+        )
+        return obj
+
+
+class AgenteCoreSerializer(AgenteBaseSerializer):
+    """Serializer de criação p/ computadores com iformações core vindas do agente."""
+
+    patrimonio = serializers.CharField(required=True)
+    hostname = serializers.CharField(source="nome", required=True)
+    username = serializers.CharField(
+        source="ultimo_usuario_logado",
+        required=True,
+    )
+
+    class Meta:
+        """Meta informações do serializer."""
+
+        model = Computador
+        fields: ClassVar[list[str]] = [
+            "patrimonio",
+            "hostname",
+            "username",
+        ]

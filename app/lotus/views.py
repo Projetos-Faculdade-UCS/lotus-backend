@@ -1,10 +1,11 @@
-from rest_framework import views, viewsets
+from rest_framework import mixins, views, viewsets
 from rest_framework.decorators import action
 from rest_framework.request import HttpRequest
 from rest_framework.response import Response
 
 from lotus.models import Bloco, Computador, Impressora, Monitor, Sala
 from lotus.serializers import (
+    AgenteCoreSerializer,
     AtivoTIBaseSerializer,
     BlocoSerializer,
     ComputadorDetailSerializer,
@@ -74,3 +75,24 @@ class SalaViewSet(viewsets.ModelViewSet):
         salas = Sala.objects.filter(bloco=bloco_id)
         serializer = SalaSerializer(salas, many=True)
         return Response(serializer.data)
+
+
+class AgenteApiView(views.APIView):
+    """View que retorna o agente de monitoramento."""
+
+    def get_serializer_class(self, tipo: str) -> None:
+        """Retorna a classe de serializer."""
+        if tipo == "core":
+            return AgenteCoreSerializer
+        return None
+
+    def post(self, request: HttpRequest, tipo: str) -> Response:
+        """Retorna o agente de monitoramento."""
+        serializer_class = self.get_serializer_class(tipo)
+        if serializer_class is None:
+            return Response(status=404)
+        serializer = serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)

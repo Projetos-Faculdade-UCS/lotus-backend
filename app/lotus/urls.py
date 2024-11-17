@@ -2,6 +2,7 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from lotus.views import (
+    AgenteApiView,
     BlocosViewSet,
     ComputadoresViewSet,
     ImpressorasViewSet,
@@ -26,4 +27,5 @@ urlpatterns = [
         r"blocos/<int:_bloco_id>/salas/<int:sala_id>/computadores/",
         ComputadoresViewSet.as_view({"get": "computadores_in_sala"}),
     ),
+    path(r"agente/<str:tipo>/", AgenteApiView.as_view(), name="agente"),
 ]
