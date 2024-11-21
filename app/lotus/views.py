@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from lotus.models import Bloco, Computador, Impressora, Monitor, Sala
 from lotus.serializers import (
     AgenteCoreSerializer,
+    AgenteHardwareSerializer,
     AtivoTIBaseSerializer,
     BlocoSerializer,
     ComputadorDetailSerializer,
@@ -84,6 +85,8 @@ class AgenteApiView(views.APIView):
         """Retorna a classe de serializer."""
         if tipo == "core":
             return AgenteCoreSerializer
+        if tipo == "hardware":
+            return AgenteHardwareSerializer
         return None
 
     def post(self, request: HttpRequest, tipo: str) -> Response:
