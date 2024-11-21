@@ -21,7 +21,7 @@ from lotus.serializers import (
 class ComputadoresViewSet(viewsets.ModelViewSet):
     """ViewSet de computadores."""
 
-    queryset = Computador.objects.all()
+    queryset = Computador.completos.all()
 
     def get_serializer_class(self) -> AtivoTIBaseSerializer:
         """Retorna a classe de serializer."""
@@ -37,7 +37,7 @@ class ComputadoresViewSet(viewsets.ModelViewSet):
         sala_id: int,
     ) -> Response:
         """Retorna os computadores de uma sala."""
-        computadores = Computador.objects.filter(local=sala_id)
+        computadores = Computador.completos.filter(local=sala_id)
         serializer = ComputadorListSerializer(computadores, many=True)
         return Response(serializer.data)
 

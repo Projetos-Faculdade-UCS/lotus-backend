@@ -16,6 +16,46 @@ CHOICES_CRITICIDADE_DADOS = (
 )
 
 
+class ComputadorQuerySet(models.QuerySet):
+    """QuerySet customizado para o modelo Computador."""
+
+    def completos(self) -> models.QuerySet:
+        """Retorna os computadores com todos os campos preenchidos."""
+        return self.filter(
+            nome__isnull=False,
+            fabricante__isnull=False,
+            numero_serie__isnull=False,
+            em_uso=True,
+            descricao__isnull=False,
+            local__isnull=False,
+            responsavel__isnull=False,
+            tamanho_ram__isnull=False,
+            tamanho_hd__isnull=False,
+            modelo_cpu__isnull=False,
+            ultimo_usuario_logado__isnull=False,
+            valido=True,
+            sistema_operacional__isnull=False,
+            placa_mae__isnull=False,
+            criticidade_dados__isnull=False,
+        )
+
+
+class AllComputadoresManager(models.Manager):
+    """Manager customizado para o modelo Computador."""
+
+    def get_queryset(self) -> models.QuerySet:
+        """Retorna o queryset customizado."""
+        return ComputadorQuerySet(self.model, using=self._db)
+
+
+class ComputadoresCompletosManager(models.Manager):
+    """Manager customizado para o modelo Computador."""
+
+    def get_queryset(self) -> models.QuerySet:
+        """Retorna o queryset customizado."""
+        return ComputadorQuerySet(self.model, using=self._db).completos()
+
+
 class AtivoTI(models.Model):
     """Modelo genérico de ativo de TI."""
 
@@ -61,6 +101,9 @@ class Computador(AtivoTI):
         choices=CHOICES_CRITICIDADE_DADOS,
         default="baixa",
     )
+
+    completos = ComputadoresCompletosManager()
+    objects = AllComputadoresManager()
 
     class Meta:
         """Meta informações do modelo."""
