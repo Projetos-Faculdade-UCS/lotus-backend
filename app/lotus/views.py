@@ -7,6 +7,7 @@ from lotus.models import Bloco, Computador, Impressora, Monitor, Sala
 from lotus.serializers import (
     AgenteCoreSerializer,
     AgenteHardwareSerializer,
+    AgenteProgramasSerializer,
     AtivoTIBaseSerializer,
     BlocoSerializer,
     ComputadorDetailSerializer,
@@ -87,6 +88,8 @@ class AgenteApiView(views.APIView):
             return AgenteCoreSerializer
         if tipo == "hardware":
             return AgenteHardwareSerializer
+        if tipo == "programs":
+            return AgenteProgramasSerializer
         return None
 
     def post(self, request: HttpRequest, tipo: str) -> Response:

@@ -259,3 +259,33 @@ class AgenteHardwareSerializer(AgenteBaseSerializer):
             msg = "Campo 'motherboard' não encontrado."
             raise serializers.ValidationError(msg)
         return data["motherboard"]["_product"]
+
+
+class AgenteProgramasSerializer(AgenteBaseSerializer):
+    """Serializer de criação p/ programas com infos vindas do agente."""
+
+    patrimonio = serializers.CharField(required=True)
+    programs = serializers.ListField(
+        child=serializers.DictField(),
+        required=True,
+        write_only=True,
+    )
+
+    class Meta:
+        """Meta informações do serializer."""
+
+        model = Programa
+        fields: ClassVar[list[str]] = ["patrimonio", "programs"]
+
+    def create(self, validated_data: dict) -> None:
+        """Cria um objeto com as informações do agente."""
+        patrimonio = validated_data.pop("patrimonio")
+        programas = validated_data.pop("programs")
+        computador = Computador.objects.get(patrimonio=patrimonio)
+        for programa in programas:
+            Programa.objects.create(
+                computador=computador,
+                nome=programa["name"],
+                versao=programa["version"],
+            )
+        return computador
