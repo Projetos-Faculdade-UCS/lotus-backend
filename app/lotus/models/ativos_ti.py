@@ -102,8 +102,8 @@ class Computador(AtivoTI):
         default="baixa",
     )
 
-    completos = ComputadoresCompletosManager()
     objects = AllComputadoresManager()
+    completos = ComputadoresCompletosManager()
 
     class Meta:
         """Meta informações do modelo."""
