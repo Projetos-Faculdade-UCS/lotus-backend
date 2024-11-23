@@ -1,6 +1,6 @@
 from django.db import models
 
-from lotus.models import Computador
+from lotus.models.ativos_ti import Computador
 
 
 class LicencaSoftware(models.Model):

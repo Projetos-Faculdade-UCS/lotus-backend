@@ -1,7 +1,7 @@
 from lotus.models.ativos_ti import Computador
 
 
-class ComputadorAll(Computador):
+class ComputadorAllProxy(Computador):
     """Proxy model para todos os computadores."""
 
     class Meta:
@@ -12,7 +12,7 @@ class ComputadorAll(Computador):
         verbose_name_plural = "Computadores"
 
 
-class ComputadorCompletos(Computador):
+class ComputadorCompletosProxy(Computador):
     """Proxy model para computadores completos."""
 
     class Meta:
