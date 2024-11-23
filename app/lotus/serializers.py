@@ -195,6 +195,7 @@ class AgenteHardwareSerializer(AgenteBaseSerializer):
     tamanho_ram = serializers.CharField(required=True)
     modelo_cpu = serializers.CharField(required=True)
     placa_mae = serializers.CharField(required=True)
+    sistema_operacional = serializers.CharField(required=True)
 
     class Meta:
         """Meta informações do serializer."""
@@ -206,6 +207,7 @@ class AgenteHardwareSerializer(AgenteBaseSerializer):
             "tamanho_ram",
             "modelo_cpu",
             "placa_mae",
+            "sistema_operacional",
         ]
 
     def to_internal_value(self, data: dict) -> dict:
@@ -217,6 +219,7 @@ class AgenteHardwareSerializer(AgenteBaseSerializer):
         internal_data["tamanho_ram"] = self.process_tamanho_ram(data)
         internal_data["modelo_cpu"] = self.process_modelo_cpu(data)
         internal_data["placa_mae"] = self.process_placa_mae(data)
+        internal_data["sistema_operacional"] = self.process_sistema_operacional(data)
         return super().to_internal_value(internal_data)
 
     def process_patrimonio(self, data: dict) -> str:
@@ -259,6 +262,13 @@ class AgenteHardwareSerializer(AgenteBaseSerializer):
             msg = "Campo 'motherboard' não encontrado."
             raise serializers.ValidationError(msg)
         return data["motherboard"]["_product"]
+
+    def process_sistema_operacional(self, data: dict) -> str:
+        """Processa o sistema operacional."""
+        if "os" not in data:
+            msg = "Campo 'os' não encontrado."
+            raise serializers.ValidationError(msg)
+        return data["os"]
 
 
 class AgenteProgramasSerializer(AgenteBaseSerializer):
