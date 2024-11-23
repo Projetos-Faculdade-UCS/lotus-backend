@@ -287,15 +287,21 @@ class AgenteProgramasSerializer(AgenteBaseSerializer):
         model = Programa
         fields: ClassVar[list[str]] = ["patrimonio", "programs"]
 
-    def create(self, validated_data: dict) -> None:
-        """Cria um objeto com as informações do agente."""
-        patrimonio = validated_data.pop("patrimonio")
-        programas = validated_data.pop("programs")
-        computador = Computador.objects.get(patrimonio=patrimonio)
-        for programa in programas:
-            Programa.objects.create(
+    def save_programs(self, computador: Computador, programs: list[dict]) -> None:
+        """Salva os programas associados ao computador."""
+        for programa in programs:
+            Programa.objects.get_or_create(
                 computador=computador,
                 nome=programa["name"],
                 versao=programa["version"],
             )
+
+    def create(self, validated_data: dict) -> None:
+        """Cria um objeto com as informações do agente."""
+        patrimonio = validated_data.pop("patrimonio")
+        programas = validated_data.pop("programs")
+
+        computador = super().create({"patrimonio": patrimonio}, **validated_data)
+
+        self.save_programs(computador, programas)
         return computador

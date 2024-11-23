@@ -65,7 +65,7 @@ class AtivoTI(models.Model):
         default="computador",
     )
     patrimonio = models.IntegerField(unique=True)
-    nome = models.CharField(max_length=100)
+    nome = models.CharField(max_length=100, blank=True)
     fabricante = models.CharField(max_length=100, blank=True)
     numero_serie = models.CharField(max_length=50, blank=True)
     em_uso = models.BooleanField(default=False)
