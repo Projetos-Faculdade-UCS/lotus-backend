@@ -9,7 +9,7 @@ from lotus.models import (
     Programa,
     Sala,
 )
-from lotus.models.proxys import ComputadorAll, ComputadorCompletos
+from lotus.models.proxys import ComputadorAllProxy, ComputadorCompletosProxy
 
 
 class ComputadorAdmin(admin.ModelAdmin):
@@ -37,9 +37,9 @@ class ComputadorCompletosAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(ComputadorAll, ComputadorAdmin)
+admin.site.register(ComputadorAllProxy, ComputadorAdmin)
 admin.site.register(
-    ComputadorCompletos,
+    ComputadorCompletosProxy,
     ComputadorCompletosAdmin,
     name="Computadores Completos",
 )

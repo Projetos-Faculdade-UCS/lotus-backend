@@ -15,6 +15,7 @@ class AtivoTIBaseSerializer(serializers.ModelSerializer):
 
     sala = SalaSerializer(source="local")
     relacionamentos = serializers.SerializerMethodField()
+    patrimonio = serializers.SerializerMethodField()
 
     class Meta:
         """Meta informações do serializer."""
@@ -39,6 +40,10 @@ class AtivoTIBaseSerializer(serializers.ModelSerializer):
     def get_relacionamentos(self, obj: AtivoTI) -> int:
         """Retorna a quantidade de relacionamentos."""
         return obj.ativos_relacionados.count()
+
+    def get_patrimonio(self, obj: AtivoTI) -> int:
+        """Retorna o patrimônio do ativo."""
+        return int(obj.patrimonio) if obj.patrimonio else 0
 
 
 class ComputadorListSerializer(AtivoTIBaseSerializer):
