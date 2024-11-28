@@ -1,61 +1,13 @@
-from __future__ import annotations
-
 from typing import ClassVar
 
 from rest_framework import serializers
 
-from lotus.models import (
-    AtivoTI,
-    Bloco,
-    Computador,
-    Impressora,
-    LicencaSoftware,
-    Monitor,
-    Programa,
-    Sala,
+from lotus.models import AtivoTI, Computador, Impressora, Monitor
+from lotus.serializers.computador_relations import (
+    LicencaSoftwareSerializer,
+    ProgramaSerializer,
 )
-
-
-class BlocoSerializer(serializers.ModelSerializer):
-    """Serializer de blocos."""
-
-    class Meta:
-        """Meta informações do serializer."""
-
-        model = Bloco
-        fields = "__all__"
-
-
-class SalaSerializer(serializers.ModelSerializer):
-    """Serializer de salas."""
-
-    bloco = BlocoSerializer()
-
-    class Meta:
-        """Meta informações do serializer."""
-
-        model = Sala
-        fields: ClassVar[list[str]] = ["id", "nome", "bloco"]
-
-
-class ProgramaSerializer(serializers.ModelSerializer):
-    """Serializer de programas."""
-
-    class Meta:
-        """Meta informações do serializer."""
-
-        model = Programa
-        exclude: ClassVar[list[str]] = ["computador"]
-
-
-class LicencaSoftwareSerializer(serializers.ModelSerializer):
-    """Serializer de licenças de software."""
-
-    class Meta:
-        """Meta informações do serializer."""
-
-        model = LicencaSoftware
-        exclude: ClassVar[list[str]] = ["computador"]
+from lotus.serializers.locais import SalaSerializer
 
 
 class AtivoTIBaseSerializer(serializers.ModelSerializer):
