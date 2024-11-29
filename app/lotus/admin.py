@@ -3,21 +3,22 @@ from django.contrib import admin
 from lotus.models import (
     Bloco,
     Computador,
+    ComputadorAllProxy,
+    ComputadorCompletosProxy,
     Impressora,
     LicencaSoftware,
     Monitor,
     Programa,
     Sala,
 )
-from lotus.models.proxys import ComputadorAllProxy, ComputadorCompletosProxy
 
 
 class ComputadorAdmin(admin.ModelAdmin):
     """Admin de Computador."""
 
-    list_display = ("nome", "numero_serie", "em_uso", "local", "responsavel")
+    list_display = ("nome", "patrimonio", "em_uso", "local", "responsavel")
     list_filter = ("em_uso",)
-    search_fields = ("nome", "numero_serie", "responsavel")
+    search_fields = ("nome", "patrimonio", "responsavel")
 
     def get_queryset(self, _request) -> Computador:
         """Retorna o queryset customizado."""
@@ -27,9 +28,9 @@ class ComputadorAdmin(admin.ModelAdmin):
 class ComputadorCompletosAdmin(admin.ModelAdmin):
     """Admin de Computadores Completos."""
 
-    list_display = ("nome", "numero_serie", "em_uso", "local", "responsavel")
+    list_display = ("nome", "patrimonio", "em_uso", "local", "responsavel")
     list_filter = ("em_uso",)
-    search_fields = ("nome", "numero_serie", "responsavel")
+    search_fields = ("nome", "patrimonio", "responsavel")
 
     def get_queryset(self, _request) -> Computador:
         """Retorna o queryset customizado."""
