@@ -3,6 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.request import HttpRequest
 from rest_framework.response import Response
 
+from lotus.filters import SalaFilter
 from lotus.models import Bloco, Computador, Impressora, Monitor, Sala
 from lotus.serializers import (
     AgenteCoreSerializer,
@@ -70,6 +71,7 @@ class SalaViewSet(viewsets.ModelViewSet):
 
     queryset = Sala.objects.all()
     serializer_class = SalaSerializer
+    filterset_class = SalaFilter
 
     @action(detail=False, methods=["get"])
     def salas_in_bloco(self, _request: HttpRequest, bloco_id: int) -> Response:
