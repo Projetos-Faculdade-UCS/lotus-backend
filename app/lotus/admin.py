@@ -4,7 +4,7 @@ from lotus.models import (
     Bloco,
     Computador,
     ComputadorAllProxy,
-    ComputadorCompletosProxy,
+    ComputadorValidosProxy,
     Impressora,
     LicencaSoftware,
     Monitor,
@@ -25,8 +25,8 @@ class ComputadorAdmin(admin.ModelAdmin):
         return Computador.objects.all()
 
 
-class ComputadorCompletosAdmin(admin.ModelAdmin):
-    """Admin de Computadores Completos."""
+class ComputadorValidosAdmin(admin.ModelAdmin):
+    """Admin de Computadores Validos."""
 
     list_display = ("nome", "patrimonio", "em_uso", "local", "responsavel")
     list_filter = ("em_uso",)
@@ -34,15 +34,15 @@ class ComputadorCompletosAdmin(admin.ModelAdmin):
 
     def get_queryset(self, _request) -> Computador:
         """Retorna o queryset customizado."""
-        return Computador.completos.all()
+        return Computador.validos.all()
 
 
 # Register your models here.
 admin.site.register(ComputadorAllProxy, ComputadorAdmin)
 admin.site.register(
-    ComputadorCompletosProxy,
-    ComputadorCompletosAdmin,
-    name="Computadores Completos",
+    ComputadorValidosProxy,
+    ComputadorValidosAdmin,
+    name="Computadores Validos",
 )
 admin.site.register(Bloco)
 admin.site.register(Sala)

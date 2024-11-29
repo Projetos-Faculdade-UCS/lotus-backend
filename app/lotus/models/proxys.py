@@ -12,12 +12,12 @@ class ComputadorAllProxy(Computador):
         verbose_name_plural = "Computadores"
 
 
-class ComputadorCompletosProxy(Computador):
-    """Proxy model para computadores completos."""
+class ComputadorValidosProxy(Computador):
+    """Proxy model para computadores validos."""
 
     class Meta:
         """Meta opções."""
 
         proxy = True
-        verbose_name = "Computador Completo"
-        verbose_name_plural = "Computadores Completos"
+        verbose_name = "Computador Valido"
+        verbose_name_plural = "Computadores Validos"
