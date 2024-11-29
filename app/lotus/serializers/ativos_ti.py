@@ -16,6 +16,7 @@ class AtivoTIBaseSerializer(serializers.ModelSerializer):
     sala = SalaSerializer(source="local")
     relacionamentos = serializers.SerializerMethodField()
     patrimonio = serializers.SerializerMethodField()
+    tipo = serializers.CharField(source="get_tipo_display")
 
     class Meta:
         """Meta informações do serializer."""
