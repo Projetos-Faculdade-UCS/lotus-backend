@@ -2,7 +2,7 @@ from typing import ClassVar
 
 from rest_framework import serializers
 
-from lotus.models import AtivoTI, Computador, Impressora, Monitor
+from lotus.models import AtivoTI, Computador, Impressora, Monitor, Sala
 from lotus.serializers.computador_relations import (
     LicencaSoftwareSerializer,
     ProgramaSerializer,
@@ -67,6 +67,10 @@ class ComputadorDetailSerializer(AtivoTIBaseSerializer):
         read_only=True,
         source="licencasoftware_set",
     )
+    local = serializers.PrimaryKeyRelatedField(
+        queryset=Sala.objects.all(),
+        write_only=True,
+    )
 
     class Meta(AtivoTIBaseSerializer.Meta):
         """Meta informações do serializer."""
@@ -84,6 +88,7 @@ class ComputadorDetailSerializer(AtivoTIBaseSerializer):
             "licencas",
             "valido",
             "ultimo_usuario_logado",
+            "local",
         ]
 
 
