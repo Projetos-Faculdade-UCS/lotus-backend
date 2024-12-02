@@ -44,6 +44,13 @@ class ComputadoresViewSet(viewsets.ModelViewSet):
         serializer = ComputadorListSerializer(computadores, many=True)
         return Response(serializer.data)
 
+    @action(detail=False, methods=["get"])
+    def pendentes(self, _request: HttpRequest) -> Response:
+        """Retorna os computadores pendentes de validação."""
+        computadores = Computador.objects.filter(valido=False)
+        serializer = ComputadorListSerializer(computadores, many=True)
+        return Response(serializer.data)
+
 
 class ImpressorasViewSet(viewsets.ModelViewSet):
     """ViewSet de impressoras."""
