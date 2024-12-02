@@ -15,6 +15,7 @@ from lotus.serializers import (
     ComputadorListSerializer,
     ImpressoraListSerializer,
     MonitorListSerializer,
+    MovimentacaoSerializer,
     SalaSerializer,
 )
 
@@ -42,6 +43,14 @@ class ComputadoresViewSet(viewsets.ModelViewSet):
         """Retorna os computadores de uma sala."""
         computadores = Computador.validos.filter(local=sala_id)
         serializer = ComputadorListSerializer(computadores, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=["get"])
+    def get_movimentacoes(self, _request: HttpRequest, pk: int) -> Response:
+        """Retorna as movimentações de um computador."""
+        computador = self.get_object()
+        movimentacoes = computador.get_historico_movimentacoes()
+        serializer = MovimentacaoSerializer(movimentacoes, many=True)
         return Response(serializer.data)
 
 

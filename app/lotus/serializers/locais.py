@@ -2,7 +2,7 @@ from typing import ClassVar
 
 from rest_framework import serializers
 
-from lotus.models import Bloco, Sala
+from lotus.models import Bloco, Sala, Movimentacao
 
 
 class BlocoSerializer(serializers.ModelSerializer):
@@ -25,3 +25,17 @@ class SalaSerializer(serializers.ModelSerializer):
 
         model = Sala
         fields: ClassVar[list[str]] = ["id", "nome", "bloco"]
+
+
+class MovimentacaoSerializer(serializers.Serializer):
+    """Serializer de movimentações."""
+
+    sala_atual = SalaSerializer()
+    data = serializers.DateTimeField(format="%d/%m/%Y")
+    motivo = serializers.CharField()
+
+    class Meta:
+        """Meta informações do serializer."""
+
+        model = Movimentacao
+        fields: ClassVar = ["sala_atual", "data", "motivo"]
