@@ -27,15 +27,15 @@ class SalaSerializer(serializers.ModelSerializer):
         fields: ClassVar[list[str]] = ["id", "nome", "bloco"]
 
 
-class MovimentacaoSerializer(serializers.Serializer):
+class MovimentacaoSerializer(serializers.ModelSerializer):
     """Serializer de movimentações."""
 
     sala_atual = SalaSerializer()
-    data = serializers.DateTimeField(format="%d/%m/%Y")
+    data = serializers.DateTimeField()
     motivo = serializers.CharField()
 
     class Meta:
         """Meta informações do serializer."""
 
         model = Movimentacao
-        fields: ClassVar = ["sala_atual", "data", "motivo"]
+        fields: ClassVar = ["id", "sala_atual", "data", "motivo"]

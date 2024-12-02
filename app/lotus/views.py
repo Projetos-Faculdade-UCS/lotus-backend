@@ -46,7 +46,7 @@ class ComputadoresViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     @action(detail=True, methods=["get"])
-    def get_movimentacoes(self, _request: HttpRequest, pk: int) -> Response:
+    def movimentacoes(self, _request: HttpRequest, pk: int) -> Response:
         """Retorna as movimentações de um computador."""
         computador = self.get_object()
         movimentacoes = computador.get_historico_movimentacoes()
