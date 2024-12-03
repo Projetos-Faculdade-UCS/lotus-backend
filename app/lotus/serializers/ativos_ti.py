@@ -70,6 +70,8 @@ class ComputadorDetailSerializer(AtivoTIBaseSerializer):
     local = serializers.PrimaryKeyRelatedField(
         queryset=Sala.objects.all(),
         write_only=True,
+        required=False,
+        allow_null=True,
     )
 
     class Meta(AtivoTIBaseSerializer.Meta):
