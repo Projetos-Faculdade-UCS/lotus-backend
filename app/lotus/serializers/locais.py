@@ -2,7 +2,7 @@ from typing import ClassVar
 
 from rest_framework import serializers
 
-from lotus.models import Bloco, Sala, Movimentacao
+from lotus.models import Bloco, Movimentacao, Sala
 
 
 class BlocoSerializer(serializers.ModelSerializer):

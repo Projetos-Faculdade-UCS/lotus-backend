@@ -1,18 +1,18 @@
 meta {
-  name: atualiza-local-computador
+  name: atualiza-local-impressora
   type: http
-  seq: 2
+  seq: 5
 }
 
 patch {
-  url: http://localhost:8000/computadores/1/
+  url: http://localhost:8000/impressoras/1/
   body: json
   auth: none
 }
 
 body:json {
   {
-    "local": 2
+    "local": 22
   }
 }
 

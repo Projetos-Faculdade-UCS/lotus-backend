@@ -17,6 +17,12 @@ class AtivoTIBaseSerializer(serializers.ModelSerializer):
     relacionamentos = serializers.SerializerMethodField()
     patrimonio = serializers.SerializerMethodField()
     tipo = serializers.CharField(source="get_tipo_display")
+    local = serializers.PrimaryKeyRelatedField(
+        queryset=Sala.objects.all(),
+        write_only=True,
+        required=False,
+        allow_null=True,
+    )
 
     class Meta:
         """Meta informações do serializer."""
@@ -36,6 +42,7 @@ class AtivoTIBaseSerializer(serializers.ModelSerializer):
             "relacionamentos",
             "responsavel",
             "ultima_atualizacao",
+            "local",
         ]
 
     def get_relacionamentos(self, obj: AtivoTI) -> int:
@@ -67,12 +74,6 @@ class ComputadorDetailSerializer(AtivoTIBaseSerializer):
         read_only=True,
         source="licencasoftware_set",
     )
-    local = serializers.PrimaryKeyRelatedField(
-        queryset=Sala.objects.all(),
-        write_only=True,
-        required=False,
-        allow_null=True,
-    )
 
     class Meta(AtivoTIBaseSerializer.Meta):
         """Meta informações do serializer."""
@@ -90,7 +91,6 @@ class ComputadorDetailSerializer(AtivoTIBaseSerializer):
             "licencas",
             "valido",
             "ultimo_usuario_logado",
-            "local",
         ]
 
 
