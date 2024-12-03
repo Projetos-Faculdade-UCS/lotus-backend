@@ -29,10 +29,21 @@ if TYPE_CHECKING:
 
     from lotus.serializers.agente import AgenteBaseSerializer
 
+
 # Create your views here.
+class AtivoTIActionsMixin:
+    """Mixin com ações comuns a ativos de TI."""
+
+    @action(detail=True, methods=["get"])
+    def movimentacoes(self, _request: HttpRequest, pk: int) -> Response:
+        """Retorna as movimentações de um computador."""
+        ativo_ti = self.get_object()
+        movimentacoes = ativo_ti.get_historico_movimentacoes()
+        serializer = MovimentacaoSerializer(movimentacoes, many=True)
+        return Response(serializer.data)
 
 
-class ComputadoresViewSet(viewsets.ModelViewSet):
+class ComputadoresViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
     """ViewSet de computadores."""
 
     queryset = Computador.validos.all()
@@ -61,14 +72,6 @@ class ComputadoresViewSet(viewsets.ModelViewSet):
         serializer = ComputadorListSerializer(computadores, many=True)
         return Response(serializer.data)
 
-    @action(detail=True, methods=["get"])
-    def movimentacoes(self, _request: HttpRequest, pk: int) -> Response:
-        """Retorna as movimentações de um computador."""
-        computador = self.get_object()
-        movimentacoes = computador.get_historico_movimentacoes()
-        serializer = MovimentacaoSerializer(movimentacoes, many=True)
-        return Response(serializer.data)
-
     @action(detail=False, methods=["get"], url_path="pendentes-validacao")
     def pendentes_validacao(self, _request: HttpRequest) -> Response:
         """Retorna os computadores pendentes de validação."""
@@ -91,14 +94,14 @@ class ComputadoresViewSet(viewsets.ModelViewSet):
         return Response({"message": "Computadores validados."})
 
 
-class ImpressorasViewSet(viewsets.ModelViewSet):
+class ImpressorasViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
     """ViewSet de impressoras."""
 
     queryset = Impressora.objects.all()
     serializer_class = ImpressoraListSerializer
 
 
-class MonitorViewSet(viewsets.ModelViewSet):
+class MonitorViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
     """ViewSet de monitores."""
 
     queryset = Monitor.objects.all()

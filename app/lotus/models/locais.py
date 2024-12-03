@@ -45,6 +45,8 @@ class Movimentacao(models.Model):
 
     sala_atual = models.ForeignKey(
         Sala,
+        null=True,
+        blank=True,
         on_delete=models.CASCADE,
     )
     movimentacao_anterior = models.ForeignKey(
