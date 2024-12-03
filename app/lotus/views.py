@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from http.client import BAD_REQUEST
 from typing import TYPE_CHECKING
 
 from rest_framework import mixins, views, viewsets
@@ -65,6 +66,20 @@ class ComputadoresViewSet(viewsets.ModelViewSet):
         computadores = Computador.objects.filter(valido=False)
         serializer = ComputadorListSerializer(computadores, many=True)
         return Response(serializer.data)
+
+    @action(detail=False, methods=["post"])
+    def validar(self, request: HttpRequest) -> Response:
+        """Valida os computadores."""
+        ids = request.data.get("ids")
+        if not ids:
+            return Response(
+                {"message": "Nenhum computador selecionado."},
+                status=BAD_REQUEST,
+            )
+        computadores = Computador.objects.filter(pk__in=ids)
+        qtd = computadores.update(valido=True)
+        print(qtd)
+        return Response({"message": "Computadores validados."})
 
 
 class ImpressorasViewSet(viewsets.ModelViewSet):
