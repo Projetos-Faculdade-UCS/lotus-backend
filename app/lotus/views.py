@@ -1,6 +1,10 @@
+from __future__ import annotations
+
+from http.client import BAD_REQUEST
+from typing import TYPE_CHECKING
+
 from rest_framework import mixins, views, viewsets
 from rest_framework.decorators import action
-from rest_framework.request import HttpRequest
 from rest_framework.response import Response
 
 from lotus.filters import SalaFilter
@@ -19,6 +23,12 @@ from lotus.serializers import (
     SalaSerializer,
 )
 
+if TYPE_CHECKING:
+    from django.db.models import QuerySet
+    from rest_framework.request import HttpRequest
+
+    from lotus.serializers.agente import AgenteBaseSerializer
+
 # Create your views here.
 
 
@@ -27,7 +37,13 @@ class ComputadoresViewSet(viewsets.ModelViewSet):
 
     queryset = Computador.validos.all()
 
-    def get_serializer_class(self) -> AtivoTIBaseSerializer:
+    def get_queryset(self) -> QuerySet[Computador]:
+        """Retorna o queryset de computadores."""
+        if self.action in ("update", "partial_update"):
+            return Computador.objects.all()
+        return super().get_queryset()
+
+    def get_serializer_class(self) -> type[AtivoTIBaseSerializer]:
         """Retorna a classe de serializer."""
         if self.action == "list":
             return ComputadorListSerializer
@@ -53,6 +69,26 @@ class ComputadoresViewSet(viewsets.ModelViewSet):
         serializer = MovimentacaoSerializer(movimentacoes, many=True)
         return Response(serializer.data)
 
+    @action(detail=False, methods=["get"], url_path="pendentes-validacao")
+    def pendentes_validacao(self, _request: HttpRequest) -> Response:
+        """Retorna os computadores pendentes de validação."""
+        computadores = Computador.objects.filter(valido=False)
+        serializer = ComputadorListSerializer(computadores, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=["post"])
+    def validar(self, request: HttpRequest) -> Response:
+        """Valida os computadores."""
+        ids = request.data.get("ids")
+        if not ids:
+            return Response(
+                {"message": "Nenhum computador selecionado."},
+                status=BAD_REQUEST,
+            )
+        computadores = Computador.objects.filter(pk__in=ids)
+        qtd = computadores.update(valido=True)
+        print(qtd)
+        return Response({"message": "Computadores validados."})
 
 class ImpressorasViewSet(viewsets.ModelViewSet):
     """ViewSet de impressoras."""
@@ -93,7 +129,7 @@ class SalaViewSet(viewsets.ModelViewSet):
 class AgenteApiView(views.APIView):
     """View que retorna o agente de monitoramento."""
 
-    def get_serializer_class(self, tipo: str) -> None:
+    def get_serializer_class(self, tipo: str) -> type[AgenteBaseSerializer] | None:
         """Retorna a classe de serializer."""
         if tipo == "core":
             return AgenteCoreSerializer
