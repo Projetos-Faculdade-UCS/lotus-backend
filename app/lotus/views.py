@@ -19,6 +19,7 @@ from lotus.serializers import (
     ComputadorListSerializer,
     ImpressoraListSerializer,
     MonitorListSerializer,
+    MovimentacaoSerializer,
     SalaSerializer,
 )
 
@@ -60,6 +61,14 @@ class ComputadoresViewSet(viewsets.ModelViewSet):
         serializer = ComputadorListSerializer(computadores, many=True)
         return Response(serializer.data)
 
+    @action(detail=True, methods=["get"])
+    def movimentacoes(self, _request: HttpRequest, pk: int) -> Response:
+        """Retorna as movimentações de um computador."""
+        computador = self.get_object()
+        movimentacoes = computador.get_historico_movimentacoes()
+        serializer = MovimentacaoSerializer(movimentacoes, many=True)
+        return Response(serializer.data)
+
     @action(detail=False, methods=["get"], url_path="pendentes-validacao")
     def pendentes_validacao(self, _request: HttpRequest) -> Response:
         """Retorna os computadores pendentes de validação."""
@@ -80,7 +89,6 @@ class ComputadoresViewSet(viewsets.ModelViewSet):
         qtd = computadores.update(valido=True)
         print(qtd)
         return Response({"message": "Computadores validados."})
-
 
 class ImpressorasViewSet(viewsets.ModelViewSet):
     """ViewSet de impressoras."""

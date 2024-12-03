@@ -14,7 +14,11 @@ from lotus.serializers.computador_relations import (
     LicencaSoftwareSerializer,
     ProgramaSerializer,
 )
-from lotus.serializers.locais import BlocoSerializer, SalaSerializer
+from lotus.serializers.locais import (
+    BlocoSerializer,
+    MovimentacaoSerializer,
+    SalaSerializer,
+)
 
 __all__ = [
     "AgenteCoreSerializer",
@@ -31,4 +35,5 @@ __all__ = [
     "MonitorListSerializer",
     "ProgramaSerializer",
     "SalaSerializer",
+    "MovimentacaoSerializer",
 ]

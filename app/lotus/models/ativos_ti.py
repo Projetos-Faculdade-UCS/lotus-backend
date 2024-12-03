@@ -1,6 +1,6 @@
 from django.db import models
 
-from lotus.models.locais import Sala
+from lotus.models.locais import Sala, Movimentacao
 
 # Create your models here.
 CHOICES_TIPO_ATIVO = (
@@ -58,6 +58,12 @@ class AtivoTI(models.Model):
     descricao = models.TextField(blank=True)
     automatico = models.BooleanField(default=True)
     local = models.ForeignKey(Sala, on_delete=models.SET_NULL, blank=True, null=True)
+    ultima_movimentacao = models.ForeignKey(
+        Movimentacao,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
     ativos_relacionados = models.ManyToManyField("self", blank=True)
     responsavel = models.CharField(max_length=100, blank=True)
     ultima_atualizacao = models.DateTimeField(auto_now=True)
@@ -70,6 +76,10 @@ class AtivoTI(models.Model):
     def __str__(self) -> str:
         """Retorna o nome do ativo."""
         return f"{self.nome} - {self.patrimonio}"
+
+    def get_historico_movimentacoes(self) -> models.QuerySet:
+        """Retorna o histórico de movimentações do ativo."""
+        return Movimentacao.get_movimentacoes(self.ultima_movimentacao)
 
 
 class Computador(AtivoTI):
