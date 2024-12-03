@@ -7,17 +7,23 @@ services:
       - ./app:/app
     env_file:
       - .env
-    command: ["./entrypoint.sh"]
+    command: [ "./entrypoint.sh" ]
     tty: true
     stdin_open: true
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   db:
     image: postgres:17.0-alpine3.20
     env_file:
       - .env
     volumes:
-        - ./postgres_data:/var/lib/postgresql/data
+      - ./postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
 volumes:
   postgres_data:
