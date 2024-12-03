@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 from http.client import BAD_REQUEST
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
+from django.db.models import Q
 from rest_framework import mixins, views, viewsets
 from rest_framework.decorators import action
+from rest_framework.request import Request
 from rest_framework.response import Response
 
 from lotus.filters import SalaFilter
@@ -25,7 +27,7 @@ from lotus.serializers import (
 
 if TYPE_CHECKING:
     from django.db.models import QuerySet
-    from rest_framework.request import HttpRequest
+    from rest_framework.request import Request
 
     from lotus.serializers.agente import AgenteBaseSerializer
 
@@ -35,7 +37,7 @@ class AtivoTIActionsMixin:
     """Mixin com ações comuns a ativos de TI."""
 
     @action(detail=True, methods=["get"])
-    def movimentacoes(self, _request: HttpRequest, pk: int) -> Response:
+    def movimentacoes(self, _request: Request, pk: int) -> Response:
         """Retorna as movimentações de um computador."""
         ativo_ti = self.get_object()
         movimentacoes = ativo_ti.get_historico_movimentacoes()
@@ -63,7 +65,7 @@ class ComputadoresViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
     @action(detail=False, methods=["get"])
     def computadores_in_sala(
         self,
-        _request: HttpRequest,
+        _request: Request,
         _bloco_id: int,
         sala_id: int,
     ) -> Response:
@@ -73,16 +75,21 @@ class ComputadoresViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
         return Response(serializer.data)
 
     @action(detail=False, methods=["get"], url_path="pendentes-validacao")
-    def pendentes_validacao(self, _request: HttpRequest) -> Response:
+    def pendentes_validacao(self, _request: Request) -> Response:
         """Retorna os computadores pendentes de validação."""
         computadores = Computador.objects.filter(valido=False)
         serializer = ComputadorListSerializer(computadores, many=True)
         return Response(serializer.data)
 
     @action(detail=False, methods=["post"])
-    def validar(self, request: HttpRequest) -> Response:
+    def validar(self, request: Request) -> Response:
         """Valida os computadores."""
-        ids = request.data.get("ids")
+        if not request.data:
+            return Response(
+                {"message": "Nenhum computador selecionado."},
+                status=BAD_REQUEST,
+            )
+        ids = cast(dict, request.data).get("ids")
         if not ids:
             return Response(
                 {"message": "Nenhum computador selecionado."},
@@ -123,7 +130,7 @@ class SalaViewSet(viewsets.ModelViewSet):
     filterset_class = SalaFilter
 
     @action(detail=False, methods=["get"])
-    def salas_in_bloco(self, _request: HttpRequest, bloco_id: int) -> Response:
+    def salas_in_bloco(self, _request: Request, bloco_id: int) -> Response:
         """Retorna as salas de um bloco."""
         salas = Sala.objects.filter(bloco=bloco_id)
         serializer = SalaSerializer(salas, many=True)
@@ -143,7 +150,7 @@ class AgenteApiView(views.APIView):
             return AgenteProgramasSerializer
         return None
 
-    def post(self, request: HttpRequest, tipo: str) -> Response:
+    def post(self, request: Request, tipo: str) -> Response:
         """Retorna o agente de monitoramento."""
         serializer_class = self.get_serializer_class(tipo)
         if serializer_class is None:
@@ -153,3 +160,42 @@ class AgenteApiView(views.APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
+
+class DashboardViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+    """View que retorna o dashboard."""
+
+    queryset = Sala.objects.all()
+    serializer_class = SalaSerializer
+
+    def list(self, _request: Request, *_args: list, **_kwargs: dict) -> Response:
+        """Retorna o dashboard."""
+        computadores = Computador.validos.all()
+        computadores_automaticos = computadores.filter(automatico=True)
+        computadores_manuais = computadores.filter(automatico=False)
+        impressoras = Impressora.objects.all()
+        monitores = Monitor.objects.all()
+        salas = Sala.objects.all()
+        # bloco_id, computador_set, id, impressora_set, monitor_set
+        salas_com_ativos = Sala.objects.filter(
+            Q(computador_set__in=computadores)
+            | Q(impressora_set__in=impressoras)
+            | Q(monitor_set__in=monitores),
+        ).distinct()
+        salas_vazias = salas.exclude(pk__in=salas_com_ativos)
+        return Response(
+            {
+                "computadores": {
+                    "total": computadores.count(),
+                    "automaticos": computadores_automaticos.count(),
+                    "manuais": computadores_manuais.count(),
+                },
+                "impressoras": impressoras.count(),
+                "monitores": monitores.count(),
+                "salas": {
+                    "total": salas.count(),
+                    "com_ativos": salas_com_ativos.count(),
+                    "vazias": salas_vazias.count(),
+                },
+            },
+        )

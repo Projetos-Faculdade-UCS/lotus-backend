@@ -1,10 +1,12 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
+from rest_framework.urlpatterns import format_suffix_patterns
 
 from lotus.views import (
     AgenteApiView,
     BlocosViewSet,
     ComputadoresViewSet,
+    DashboardViewSet,
     ImpressorasViewSet,
     MonitorViewSet,
     SalaViewSet,
@@ -16,6 +18,7 @@ router.register(r"impressoras", ImpressorasViewSet, basename="impressoras")
 router.register(r"monitores", MonitorViewSet, basename="monitores")
 router.register(r"salas", SalaViewSet, basename="salas")
 router.register(r"blocos", BlocosViewSet, basename="blocos")
+router.register(r"dashboard", DashboardViewSet, basename="dashboard")
 
 urlpatterns = [
     path("", include(router.urls)),

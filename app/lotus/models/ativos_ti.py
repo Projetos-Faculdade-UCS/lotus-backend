@@ -1,6 +1,6 @@
 from django.db import models
 
-from lotus.models.locais import Sala, Movimentacao
+from lotus.models.locais import Movimentacao, Sala
 
 # Create your models here.
 CHOICES_TIPO_ATIVO = (
@@ -57,7 +57,13 @@ class AtivoTI(models.Model):
     em_uso = models.BooleanField(default=False)
     descricao = models.TextField(blank=True)
     automatico = models.BooleanField(default=True)
-    local = models.ForeignKey(Sala, on_delete=models.SET_NULL, blank=True, null=True)
+    local = models.ForeignKey(
+        Sala,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="%(class)s_set",
+    )
     ultima_movimentacao = models.ForeignKey(
         Movimentacao,
         on_delete=models.SET_NULL,
