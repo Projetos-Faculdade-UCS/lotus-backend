@@ -90,6 +90,7 @@ class ComputadoresViewSet(viewsets.ModelViewSet):
         print(qtd)
         return Response({"message": "Computadores validados."})
 
+
 class ImpressorasViewSet(viewsets.ModelViewSet):
     """ViewSet de impressoras."""
 

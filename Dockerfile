@@ -1,9 +1,8 @@
 FROM python:3.11.10-alpine3.20
 
 # Set the working directory
+COPY ./app /app
 WORKDIR /app
-
-COPY ./app/entrypoint.sh /app/entrypoint.sh
 
 
 # Copy requirements file
