@@ -25,6 +25,8 @@ def handle_computador_local_change(
             # caso o objeto tenha pk mas não exista no banco
             cria_primeira_movimentacao(instance)
     else:
+        if not instance.local:
+            return
         cria_primeira_movimentacao(instance)
 
 
@@ -48,6 +50,8 @@ def handle_monitor_local_change(
             # caso o objeto tenha pk mas não exista no banco
             cria_primeira_movimentacao(instance)
     else:
+        if not instance.local:
+            return
         cria_primeira_movimentacao(instance)
 
 
@@ -71,6 +75,8 @@ def handle_impressora_local_change(
             # caso o objeto tenha pk mas não exista no banco
             cria_primeira_movimentacao(instance)
     else:
+        if not instance.local:
+            return
         cria_primeira_movimentacao(instance)
 
 

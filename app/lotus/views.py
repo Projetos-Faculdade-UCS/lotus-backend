@@ -11,6 +11,7 @@ from rest_framework.response import Response
 
 from lotus.filters import SalaFilter
 from lotus.models import Bloco, Computador, Impressora, Monitor, Sala
+from lotus.models.ativos_ti import AtivoTI
 from lotus.serializers import (
     AgenteCoreSerializer,
     AgenteHardwareSerializer,
@@ -183,15 +184,19 @@ class DashboardViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
             | Q(monitor_set__in=monitores),
         ).distinct()
         salas_vazias = salas.exclude(pk__in=salas_com_ativos)
+        computadores_count = computadores.count()
+        impressoras_count = impressoras.count()
+        monitores_count = monitores.count()
         return Response(
             {
+                "ativos": computadores_count + impressoras_count + monitores_count,
                 "computadores": {
-                    "total": computadores.count(),
+                    "total": computadores_count,
                     "automaticos": computadores_automaticos.count(),
                     "manuais": computadores_manuais.count(),
                 },
-                "impressoras": impressoras.count(),
-                "monitores": monitores.count(),
+                "impressoras": impressoras_count,
+                "monitores": monitores_count,
                 "salas": {
                     "total": salas.count(),
                     "com_ativos": salas_com_ativos.count(),
