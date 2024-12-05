@@ -7,7 +7,9 @@ from lotus.serializers.ativos_ti import (
     AtivoTIBaseSerializer,
     ComputadorDetailSerializer,
     ComputadorListSerializer,
+    ImpressoraDetailSerializer,
     ImpressoraListSerializer,
+    MonitorDetailSerializer,
     MonitorListSerializer,
 )
 from lotus.serializers.computador_relations import (
@@ -32,8 +34,9 @@ __all__ = [
     "ImpressoraDetailSerializer",
     "ImpressoraListSerializer",
     "LicencaSoftwareSerializer",
+    "MonitorDetailSerializer",
     "MonitorListSerializer",
+    "MovimentacaoSerializer",
     "ProgramaSerializer",
     "SalaSerializer",
-    "MovimentacaoSerializer",
 ]
