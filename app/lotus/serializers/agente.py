@@ -168,3 +168,7 @@ class AgenteProgramasSerializer(AgenteBaseSerializer):
 
         self.save_programs(computador, programas)
         return computador
+
+    def validate(self, attrs: dict) -> dict:
+        """Sobrescreve o método validate para pular a validação."""
+        return attrs
