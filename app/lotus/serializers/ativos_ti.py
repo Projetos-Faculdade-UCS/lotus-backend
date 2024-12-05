@@ -27,7 +27,7 @@ class AtivoTIBaseSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta informações do serializer."""
 
-        model = None
+        model = AtivoTI
         fields: ClassVar[list[str]] = [
             "id",
             "tipo",

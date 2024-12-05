@@ -74,14 +74,9 @@ class AtivoTI(models.Model):
     responsavel = models.CharField(max_length=100, blank=True)
     ultima_atualizacao = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        """Meta informações do modelo."""
-
-        abstract = True
-
     def __str__(self) -> str:
         """Retorna o nome do ativo."""
-        return f"{self.nome} - {self.patrimonio}"
+        return f"[{self.tipo.upper()}]{self.nome} - {self.patrimonio}"
 
     def get_historico_movimentacoes(self) -> models.QuerySet:
         """Retorna o histórico de movimentações do ativo."""
