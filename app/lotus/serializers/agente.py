@@ -23,6 +23,11 @@ class AgenteBaseSerializer(serializers.ModelSerializer):
         )
         return obj
 
+    def validate(self, attrs: dict) -> dict:
+        """Força o campo 'automatico' como True."""
+        attrs["automatico"] = True
+        return super().validate(attrs)
+
 
 class AgenteCoreSerializer(AgenteBaseSerializer):
     """Serializer de criação p/ computadores com iformações core vindas do agente."""

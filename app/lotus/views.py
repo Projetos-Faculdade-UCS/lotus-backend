@@ -20,7 +20,9 @@ from lotus.serializers import (
     BlocoSerializer,
     ComputadorDetailSerializer,
     ComputadorListSerializer,
+    ImpressoraDetailSerializer,
     ImpressoraListSerializer,
+    MonitorDetailSerializer,
     MonitorListSerializer,
     MovimentacaoSerializer,
     SalaSerializer,
@@ -114,14 +116,24 @@ class ImpressorasViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
     """ViewSet de impressoras."""
 
     queryset = Impressora.objects.all()
-    serializer_class = ImpressoraListSerializer
+
+    def get_serializer_class(self) -> type[AtivoTIBaseSerializer]:
+        """Retorna a classe de serializer."""
+        if self.action == "list":
+            return ImpressoraListSerializer
+        return ImpressoraDetailSerializer
 
 
 class MonitorViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
     """ViewSet de monitores."""
 
     queryset = Monitor.objects.all()
-    serializer_class = MonitorListSerializer
+
+    def get_serializer_class(self) -> type[AtivoTIBaseSerializer]:
+        """Retorna a classe de serializer."""
+        if self.action == "list":
+            return MonitorListSerializer
+        return MonitorDetailSerializer
 
 
 class BlocosViewSet(viewsets.ModelViewSet):

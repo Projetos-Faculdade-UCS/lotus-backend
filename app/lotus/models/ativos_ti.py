@@ -56,7 +56,7 @@ class AtivoTI(models.Model):
     numero_serie = models.CharField(max_length=50, blank=True)
     em_uso = models.BooleanField(default=False)
     descricao = models.TextField(blank=True)
-    automatico = models.BooleanField(default=True)
+    automatico = models.BooleanField(default=False)
     local = models.ForeignKey(
         Sala,
         on_delete=models.SET_NULL,
