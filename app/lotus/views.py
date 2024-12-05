@@ -179,9 +179,9 @@ class DashboardViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
         salas = Sala.objects.all()
         # bloco_id, computador_set, id, impressora_set, monitor_set
         salas_com_ativos = Sala.objects.filter(
-            Q(computador_set__in=computadores)
-            | Q(impressora_set__in=impressoras)
-            | Q(monitor_set__in=monitores),
+            Q(ativosti_set__in=computadores)
+            | Q(ativosti_set__in=impressoras)
+            | Q(ativosti_set__in=monitores),
         ).distinct()
         salas_vazias = salas.exclude(pk__in=salas_com_ativos)
         computadores_count = computadores.count()
