@@ -143,6 +143,14 @@ class MonitorViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
             return MonitorListSerializer
         return MonitorDetailSerializer
 
+    @action(detail=True, methods=["get"])
+    def relacionados(self, _request: Request, pk: int) -> Response:
+        """Retorna os ativos relacionados a um computador."""
+        monitor = Monitor.objects.get(pk=pk)
+        ativos = monitor.ativos_relacionados.all()
+        serializer = AtivoTIBaseSerializer(ativos, many=True)
+        return Response(serializer.data)
+
 
 class BlocosViewSet(viewsets.ModelViewSet):
     """ViewSet de blocos."""
