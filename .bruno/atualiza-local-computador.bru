@@ -1,0 +1,21 @@
+meta {
+  name: atualiza-local-computador
+  type: http
+  seq: 2
+}
+
+patch {
+  url: http://localhost:8000/computadores/1/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "local": 2
+  }
+}
+
+body:multipart-form {
+  sala: 3
+}

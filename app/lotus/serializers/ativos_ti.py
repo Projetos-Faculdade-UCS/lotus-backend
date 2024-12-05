@@ -1,61 +1,13 @@
-from __future__ import annotations
-
 from typing import ClassVar
 
 from rest_framework import serializers
 
-from lotus.models import (
-    AtivoTI,
-    Bloco,
-    Computador,
-    Impressora,
-    LicencaSoftware,
-    Monitor,
-    Programa,
-    Sala,
+from lotus.models import AtivoTI, Computador, Impressora, Monitor, Sala
+from lotus.serializers.computador_relations import (
+    LicencaSoftwareSerializer,
+    ProgramaSerializer,
 )
-
-
-class BlocoSerializer(serializers.ModelSerializer):
-    """Serializer de blocos."""
-
-    class Meta:
-        """Meta informações do serializer."""
-
-        model = Bloco
-        fields = "__all__"
-
-
-class SalaSerializer(serializers.ModelSerializer):
-    """Serializer de salas."""
-
-    bloco = BlocoSerializer()
-
-    class Meta:
-        """Meta informações do serializer."""
-
-        model = Sala
-        fields: ClassVar[list[str]] = ["id", "nome", "bloco"]
-
-
-class ProgramaSerializer(serializers.ModelSerializer):
-    """Serializer de programas."""
-
-    class Meta:
-        """Meta informações do serializer."""
-
-        model = Programa
-        exclude: ClassVar[list[str]] = ["computador"]
-
-
-class LicencaSoftwareSerializer(serializers.ModelSerializer):
-    """Serializer de licenças de software."""
-
-    class Meta:
-        """Meta informações do serializer."""
-
-        model = LicencaSoftware
-        exclude: ClassVar[list[str]] = ["computador"]
+from lotus.serializers.locais import SalaSerializer
 
 
 class AtivoTIBaseSerializer(serializers.ModelSerializer):
@@ -63,11 +15,19 @@ class AtivoTIBaseSerializer(serializers.ModelSerializer):
 
     sala = SalaSerializer(source="local")
     relacionamentos = serializers.SerializerMethodField()
+    patrimonio = serializers.SerializerMethodField()
+    tipo = serializers.CharField(source="get_tipo_display")
+    local = serializers.PrimaryKeyRelatedField(
+        queryset=Sala.objects.all(),
+        write_only=True,
+        required=False,
+        allow_null=True,
+    )
 
     class Meta:
         """Meta informações do serializer."""
 
-        model = None
+        model = AtivoTI
         fields: ClassVar[list[str]] = [
             "id",
             "tipo",
@@ -82,11 +42,16 @@ class AtivoTIBaseSerializer(serializers.ModelSerializer):
             "relacionamentos",
             "responsavel",
             "ultima_atualizacao",
+            "local",
         ]
 
     def get_relacionamentos(self, obj: AtivoTI) -> int:
         """Retorna a quantidade de relacionamentos."""
         return obj.ativos_relacionados.count()
+
+    def get_patrimonio(self, obj: AtivoTI) -> int:
+        """Retorna o patrimônio do ativo."""
+        return int(obj.patrimonio) if obj.patrimonio else 0
 
 
 class ComputadorListSerializer(AtivoTIBaseSerializer):
@@ -138,6 +103,15 @@ class ImpressoraListSerializer(AtivoTIBaseSerializer):
         model = Impressora
 
 
+class ImpressoraDetailSerializer(AtivoTIBaseSerializer):
+    """Serializer de detalhes de impressoras."""
+
+    class Meta(AtivoTIBaseSerializer.Meta):
+        """Meta informações do serializer."""
+
+        model = Impressora
+
+
 class MonitorListSerializer(AtivoTIBaseSerializer):
     """Serializer de listagem de monitores."""
 
@@ -145,3 +119,18 @@ class MonitorListSerializer(AtivoTIBaseSerializer):
         """Meta informações do serializer."""
 
         model = Monitor
+
+
+class MonitorDetailSerializer(AtivoTIBaseSerializer):
+    """Serializer de detalhes de monitores."""
+
+    resolucao = serializers.CharField()
+
+    class Meta(AtivoTIBaseSerializer.Meta):
+        """Meta informações do serializer."""
+
+        model = Monitor
+        fields: ClassVar[list[str]] = [
+            *AtivoTIBaseSerializer.Meta.fields,
+            "resolucao",
+        ]

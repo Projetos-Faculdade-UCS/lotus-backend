@@ -1,6 +1,6 @@
 from django.db import models
 
-from lotus.models import Computador
+from lotus.models.ativos_ti import Computador
 
 
 class LicencaSoftware(models.Model):
@@ -27,7 +27,7 @@ class LicencaSoftware(models.Model):
 class Programa(models.Model):
     """Modelo de programa."""
 
-    nome = models.CharField(max_length=100)
+    nome = models.CharField(max_length=256)
     versao = models.CharField(max_length=100)
     computador = models.ForeignKey(Computador, on_delete=models.CASCADE)
 

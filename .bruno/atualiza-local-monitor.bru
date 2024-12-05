@@ -1,0 +1,21 @@
+meta {
+  name: atualiza-local-monitor
+  type: http
+  seq: 4
+}
+
+patch {
+  url: http://localhost:8000/monitores/1/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "local": 2
+  }
+}
+
+body:multipart-form {
+  sala: 3
+}

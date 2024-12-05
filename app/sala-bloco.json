@@ -1,0 +1,533 @@
+[
+    {
+        "model": "lotus.sala",
+        "pk": 1,
+        "fields": {
+            "nome": "306",
+            "bloco": 1
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 2,
+        "fields": {
+            "nome": "305",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 3,
+        "fields": {
+            "nome": "305",
+            "bloco": 1
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 4,
+        "fields": {
+            "nome": "306",
+            "bloco": 1
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 5,
+        "fields": {
+            "nome": "308",
+            "bloco": 1
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 6,
+        "fields": {
+            "nome": "307",
+            "bloco": 1
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 7,
+        "fields": {
+            "nome": "309f",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 8,
+        "fields": {
+            "nome": "304",
+            "bloco": 1
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 9,
+        "fields": {
+            "nome": "302",
+            "bloco": 1
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 10,
+        "fields": {
+            "nome": "300",
+            "bloco": 1
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 11,
+        "fields": {
+            "nome": "309",
+            "bloco": 1
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 12,
+        "fields": {
+            "nome": "301",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 13,
+        "fields": {
+            "nome": "303",
+            "bloco": 1
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 14,
+        "fields": {
+            "nome": "301",
+            "bloco": 1
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 15,
+        "fields": {
+            "nome": "302",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 16,
+        "fields": {
+            "nome": "303",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 17,
+        "fields": {
+            "nome": "304I",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 18,
+        "fields": {
+            "nome": "304D",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 19,
+        "fields": {
+            "nome": "304H",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 20,
+        "fields": {
+            "nome": "304B",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 21,
+        "fields": {
+            "nome": "304F",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 22,
+        "fields": {
+            "nome": "304E",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 23,
+        "fields": {
+            "nome": "304G",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 24,
+        "fields": {
+            "nome": "304",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 25,
+        "fields": {
+            "nome": "304A",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 26,
+        "fields": {
+            "nome": "304C",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 27,
+        "fields": {
+            "nome": "309g",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 28,
+        "fields": {
+            "nome": "300a",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 29,
+        "fields": {
+            "nome": "300c",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 30,
+        "fields": {
+            "nome": "304k",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 31,
+        "fields": {
+            "nome": "306",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 32,
+        "fields": {
+            "nome": "309",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 33,
+        "fields": {
+            "nome": "309a",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 34,
+        "fields": {
+            "nome": "309d",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 35,
+        "fields": {
+            "nome": "304j",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 36,
+        "fields": {
+            "nome": "306b",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 37,
+        "fields": {
+            "nome": "309b",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 38,
+        "fields": {
+            "nome": "309c",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 39,
+        "fields": {
+            "nome": "309e",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 40,
+        "fields": {
+            "nome": "304l",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 41,
+        "fields": {
+            "nome": "306a",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 42,
+        "fields": {
+            "nome": "309h",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 43,
+        "fields": {
+            "nome": "308",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 44,
+        "fields": {
+            "nome": "300b",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 45,
+        "fields": {
+            "nome": "300d",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 46,
+        "fields": {
+            "nome": "301",
+            "bloco": 3
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 47,
+        "fields": {
+            "nome": "304",
+            "bloco": 3
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 48,
+        "fields": {
+            "nome": "306",
+            "bloco": 3
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 49,
+        "fields": {
+            "nome": "302",
+            "bloco": 3
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 50,
+        "fields": {
+            "nome": "303",
+            "bloco": 3
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 51,
+        "fields": {
+            "nome": "305",
+            "bloco": 3
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 52,
+        "fields": {
+            "nome": "307",
+            "bloco": 3
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 53,
+        "fields": {
+            "nome": "306C",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 54,
+        "fields": {
+            "nome": "308B",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 55,
+        "fields": {
+            "nome": "306H",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 56,
+        "fields": {
+            "nome": "308C",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 57,
+        "fields": {
+            "nome": "306D",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 58,
+        "fields": {
+            "nome": "306E",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 59,
+        "fields": {
+            "nome": "306F",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 60,
+        "fields": {
+            "nome": "306G",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 61,
+        "fields": {
+            "nome": "308A",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 62,
+        "fields": {
+            "nome": "308D",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.sala",
+        "pk": 63,
+        "fields": {
+            "nome": "307",
+            "bloco": 2
+        }
+    },
+    {
+        "model": "lotus.bloco",
+        "pk": 1,
+        "fields": {
+            "nome": "71",
+            "cidade": "Caxias do sul",
+            "campus": "Sede"
+        }
+    },
+    {
+        "model": "lotus.bloco",
+        "pk": 2,
+        "fields": {
+            "nome": "S",
+            "cidade": "Caxias do sul",
+            "campus": "Sede"
+        }
+    },
+    {
+        "model": "lotus.bloco",
+        "pk": 3,
+        "fields": {
+            "nome": "k",
+            "cidade": "Caxias do sul",
+            "campus": "Sede"
+        }
+    }
+]

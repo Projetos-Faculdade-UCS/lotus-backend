@@ -1,0 +1,21 @@
+meta {
+  name: get-computador
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://localhost:8000/computadores/1/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "sala": 2
+  }
+}
+
+body:multipart-form {
+  sala: 3
+}

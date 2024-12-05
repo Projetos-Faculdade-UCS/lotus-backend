@@ -1,0 +1,21 @@
+meta {
+  name: atualiza-local-impressora
+  type: http
+  seq: 5
+}
+
+patch {
+  url: http://localhost:8000/impressoras/1/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "local": 22
+  }
+}
+
+body:multipart-form {
+  sala: 3
+}
