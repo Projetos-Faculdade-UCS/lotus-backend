@@ -21,7 +21,9 @@ from lotus.serializers import (
     BlocoSerializer,
     ComputadorDetailSerializer,
     ComputadorListSerializer,
+    ImpressoraDetailSerializer,
     ImpressoraListSerializer,
+    MonitorDetailSerializer,
     MonitorListSerializer,
     MovimentacaoSerializer,
     SalaSerializer,
@@ -104,12 +106,33 @@ class ComputadoresViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
         print(qtd)
         return Response({"message": "Computadores validados."})
 
+    @action(detail=True, methods=["get"])
+    def relacionados(self, _request: Request, pk: int) -> Response:
+        """Retorna os ativos relacionados a um computador."""
+        computador = Computador.objects.get(pk=pk)
+        ativos = computador.ativos_relacionados.all()
+        serializer = AtivoTIBaseSerializer(ativos, many=True)
+        return Response(serializer.data)
+
 
 class ImpressorasViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
     """ViewSet de impressoras."""
 
     queryset = Impressora.objects.all()
-    serializer_class = ImpressoraListSerializer
+
+    def get_serializer_class(self) -> type[AtivoTIBaseSerializer]:
+        """Retorna a classe de serializer."""
+        if self.action == "list":
+            return ImpressoraListSerializer
+        return ImpressoraDetailSerializer
+
+    @action(detail=True, methods=["get"])
+    def relacionados(self, _request: Request, pk: int) -> Response:
+        """Retorna os ativos relacionados a um computador."""
+        impressora = Impressora.objects.get(pk=pk)
+        ativos = impressora.ativos_relacionados.all()
+        serializer = AtivoTIBaseSerializer(ativos, many=True)
+        return Response(serializer.data)
 
     filterset_class = AtivoFilter
 
@@ -118,7 +141,20 @@ class MonitorViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
     """ViewSet de monitores."""
 
     queryset = Monitor.objects.all()
-    serializer_class = MonitorListSerializer
+
+    def get_serializer_class(self) -> type[AtivoTIBaseSerializer]:
+        """Retorna a classe de serializer."""
+        if self.action == "list":
+            return MonitorListSerializer
+        return MonitorDetailSerializer
+
+    @action(detail=True, methods=["get"])
+    def relacionados(self, _request: Request, pk: int) -> Response:
+        """Retorna os ativos relacionados a um computador."""
+        monitor = Monitor.objects.get(pk=pk)
+        ativos = monitor.ativos_relacionados.all()
+        serializer = AtivoTIBaseSerializer(ativos, many=True)
+        return Response(serializer.data)
 
     filterset_class = AtivoFilter
 
@@ -186,9 +222,9 @@ class DashboardViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
         salas = Sala.objects.all()
         # bloco_id, computador_set, id, impressora_set, monitor_set
         salas_com_ativos = Sala.objects.filter(
-            Q(computador_set__in=computadores)
-            | Q(impressora_set__in=impressoras)
-            | Q(monitor_set__in=monitores),
+            Q(ativoti_set__in=computadores)
+            | Q(ativoti_set__in=impressoras)
+            | Q(ativoti_set__in=monitores),
         ).distinct()
         salas_vazias = salas.exclude(pk__in=salas_com_ativos)
         computadores_count = computadores.count()

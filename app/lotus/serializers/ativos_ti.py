@@ -27,7 +27,7 @@ class AtivoTIBaseSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta informações do serializer."""
 
-        model = None
+        model = AtivoTI
         fields: ClassVar[list[str]] = [
             "id",
             "tipo",
@@ -103,6 +103,15 @@ class ImpressoraListSerializer(AtivoTIBaseSerializer):
         model = Impressora
 
 
+class ImpressoraDetailSerializer(AtivoTIBaseSerializer):
+    """Serializer de detalhes de impressoras."""
+
+    class Meta(AtivoTIBaseSerializer.Meta):
+        """Meta informações do serializer."""
+
+        model = Impressora
+
+
 class MonitorListSerializer(AtivoTIBaseSerializer):
     """Serializer de listagem de monitores."""
 
@@ -110,3 +119,18 @@ class MonitorListSerializer(AtivoTIBaseSerializer):
         """Meta informações do serializer."""
 
         model = Monitor
+
+
+class MonitorDetailSerializer(AtivoTIBaseSerializer):
+    """Serializer de detalhes de monitores."""
+
+    resolucao = serializers.CharField()
+
+    class Meta(AtivoTIBaseSerializer.Meta):
+        """Meta informações do serializer."""
+
+        model = Monitor
+        fields: ClassVar[list[str]] = [
+            *AtivoTIBaseSerializer.Meta.fields,
+            "resolucao",
+        ]

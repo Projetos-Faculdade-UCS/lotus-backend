@@ -31,4 +31,16 @@ urlpatterns = [
         ComputadoresViewSet.as_view({"get": "computadores_in_sala"}),
     ),
     path(r"agente/<str:tipo>/", AgenteApiView.as_view(), name="agente"),
+    path(
+        r"computadores/<int:pk>/relacionados/",
+        ComputadoresViewSet.as_view({"get": "relacionados"}),
+    ),
+    path(
+        r"impressoras/<int:pk>/relacionados/",
+        ImpressorasViewSet.as_view({"get": "relacionados"}),
+    ),
+    path(
+        r"monitores/<int:pk>/relacionados/",
+        MonitorViewSet.as_view({"get": "relacionados"}),
+    ),
 ]

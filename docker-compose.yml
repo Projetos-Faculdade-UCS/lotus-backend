@@ -7,7 +7,6 @@ services:
       - ./app:/app
     env_file:
       - .env
-    command: [ "./entrypoint.sh" ]
     tty: true
     stdin_open: true
     depends_on:
