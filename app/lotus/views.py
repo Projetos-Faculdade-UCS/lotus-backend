@@ -101,6 +101,14 @@ class ComputadoresViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
         print(qtd)
         return Response({"message": "Computadores validados."})
 
+    @action(detail=False, methods=["get"])
+    def ativos_relacionados(self, _request: Request, computador_id: int) -> Response:
+        """Retorna os ativos relacionados a um computador."""
+        computador = Computador.objects.get(pk=computador_id)
+        ativos = computador.ativos_relacionados.all()
+        serializer = AtivoTIBaseSerializer(ativos, many=True)
+        return Response(serializer.data)
+
 
 class ImpressorasViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
     """ViewSet de impressoras."""
