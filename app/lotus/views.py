@@ -123,6 +123,14 @@ class ImpressorasViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
             return ImpressoraListSerializer
         return ImpressoraDetailSerializer
 
+    @action(detail=True, methods=["get"])
+    def relacionados(self, _request: Request, pk: int) -> Response:
+        """Retorna os ativos relacionados a um computador."""
+        impressora = Impressora.objects.get(pk=pk)
+        ativos = impressora.ativos_relacionados.all()
+        serializer = AtivoTIBaseSerializer(ativos, many=True)
+        return Response(serializer.data)
+
 
 class MonitorViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
     """ViewSet de monitores."""

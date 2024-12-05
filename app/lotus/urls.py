@@ -35,4 +35,8 @@ urlpatterns = [
         r"computadores/<int:pk>/relacionados/",
         ComputadoresViewSet.as_view({"get": "relacionados"}),
     ),
+    path(
+        r"impressoras/<int:pk>/relacionados/",
+        ImpressorasViewSet.as_view({"get": "relacionados"}),
+    ),
 ]
