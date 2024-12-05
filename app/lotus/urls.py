@@ -32,7 +32,7 @@ urlpatterns = [
     ),
     path(r"agente/<str:tipo>/", AgenteApiView.as_view(), name="agente"),
     path(
-        r"computadores/<int:computador_id>/ativos-relacionados/",
-        ComputadoresViewSet.as_view({"get": "ativos_relacionados"}),
+        r"computadores/<int:pk>/relacionados/",
+        ComputadoresViewSet.as_view({"get": "relacionados"}),
     ),
 ]
