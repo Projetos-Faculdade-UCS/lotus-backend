@@ -1,15 +1,16 @@
 from __future__ import annotations
 
 from http.client import BAD_REQUEST
-from typing import TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, ClassVar, cast
 
 from django.db.models import Q
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, views, viewsets
 from rest_framework.decorators import action
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from lotus.filters import SalaFilter
+from lotus.filters import AtivoFilter, SalaFilter
 from lotus.models import Bloco, Computador, Impressora, Monitor, Sala
 from lotus.models.ativos_ti import AtivoTI
 from lotus.serializers import (
@@ -52,6 +53,8 @@ class ComputadoresViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
     """ViewSet de computadores."""
 
     queryset = Computador.validos.all()
+
+    filterset_class = AtivoFilter
 
     def get_queryset(self) -> QuerySet[Computador]:
         """Retorna o queryset de computadores."""
@@ -131,6 +134,8 @@ class ImpressorasViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
         serializer = AtivoTIBaseSerializer(ativos, many=True)
         return Response(serializer.data)
 
+    filterset_class = AtivoFilter
+
 
 class MonitorViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
     """ViewSet de monitores."""
@@ -150,6 +155,8 @@ class MonitorViewSet(viewsets.ModelViewSet, AtivoTIActionsMixin):
         ativos = monitor.ativos_relacionados.all()
         serializer = AtivoTIBaseSerializer(ativos, many=True)
         return Response(serializer.data)
+
+    filterset_class = AtivoFilter
 
 
 class BlocosViewSet(viewsets.ModelViewSet):
